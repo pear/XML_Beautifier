@@ -353,8 +353,7 @@ class XML_Beautifier extends XML_Parser {
 			*/
             case    XML_BEAUTIFIER_XML_DECLARATION:
                 $indent = $this->_getIndentString($struct["depth"]);
-                $xml    = $indent . XML_Util::getXMLDeclaration();
-
+                $xml    = $indent . XML_Util::getXMLDeclaration($struct["version"], $struct["encoding"], $struct["standalone"]);
                 break;      
 
             /*
@@ -599,10 +598,22 @@ class XML_Beautifier extends XML_Parser {
                 $attribs[$match[1][$i]] = $match[2][$i];
     		}
 
+            if (!isset($attribs["version"])) {
+                $attribs["version"] = "1.0";
+            }
+            if (!isset($attribs["encoding"])) {
+                $attribs["encoding"] = "UTF-8";
+            }
+            if (!isset($attribs["standalone"])) {
+                $attribs["standalone"] = true;
+            }
+            
 			$struct	= array(
-	                         "type"    => XML_BEAUTIFIER_XML_DECLARATION,
-	                         "attribs" => $attribs,
-	                         "depth"   => $this->_depth
+	                         "type"       => XML_BEAUTIFIER_XML_DECLARATION,
+	                         "version"    => $attribs["version"],
+	                         "encoding"   => $attribs["encoding"],
+	                         "standalone" => $attribs["standalone"],
+	                         "depth"      => $this->_depth
 	                       );
 		} else {
 		/*
