@@ -65,6 +65,13 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     var $_mode = "xml";
     
    /**
+    * options for the tokenizer
+    * @var    array
+    * @access private
+    */
+    var $_options = array();
+    
+   /**
     * Tokenize a document
     *
     * @param    string  $document   filename or XML document
@@ -266,45 +273,10 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
             $regs = array();
             eregi("<!--(.+)-->", $data, $regs);
             $comment = trim($regs[1]);
-            $lines   = count(explode("\n",$comment));
-            
-            /*
-            * normalize comment, i.e. combine it to one
-            * line and remove whitespace
-            */
-            if ($this->_options["normalizeComments"] && $lines > 1){
-                $comment = preg_replace("/\s\s+/s", " ", str_replace( "\n" , " ", $comment));
-                $lines   = 1;
-            }
-
-            /*
-            * check for the maximum length of one line
-            */
-            if ($this->_options["maxCommentLine"] > 0) {
-                if ($lines > 1) {
-                    $commentLines = explode("\n", $comment);
-                } else {
-                    $commentLines = array($comment);
-                }
-
-                $comment = "";
-                for ($i = 0; $i < $lines; $i++) {
-                    if (strlen($commentLines[$i]) <= $this->_options["maxCommentLine"]) {
-                        $comment .= $commentLines[$i];
-                        continue;
-                    }
-                    $comment .= wordwrap($commentLines[$i], $this->_options["maxCommentLine"] );
-                    if ($i != ($lines-1)) {
-                        $comment .= "\n";
-                    }
-                }
-                $lines   = count(explode("\n",$comment));
-            }
             
             $struct = array(
                              "type"    => XML_BEAUTIFIER_COMMENT,
                              "data"    => $comment,
-                             "lines"   => $lines,
                              "depth"   => $this->_depth
                            );
         /*

@@ -73,6 +73,7 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
      *
      * @access  private 
      * @param   array   $token structure that should be serialized
+     * @todo    split this method into smaller methods
      */
     function _serializeToken($token)
     {
@@ -173,14 +174,51 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
             * comments
             */
             case    XML_BEAUTIFIER_COMMENT:
+                $lines   = count(explode("\n",$token["data"]));
+                
+                /*
+                * normalize comment, i.e. combine it to one
+                * line and remove whitespace
+                */
+                if ($this->_options["normalizeComments"] && $lines > 1){
+                    $comment = preg_replace("/\s\s+/s", " ", str_replace( "\n" , " ", $token["data"]));
+                    $lines   = 1;
+                } else {
+                    $comment = $token["data"];
+                }
+    
+                /*
+                * check for the maximum length of one line
+                */
+                if ($this->_options["maxCommentLine"] > 0) {
+                    if ($lines > 1) {
+                        $commentLines = explode("\n", $comment);
+                    } else {
+                        $commentLines = array($comment);
+                    }
+    
+                    $comment = "";
+                    for ($i = 0; $i < $lines; $i++) {
+                        if (strlen($commentLines[$i]) <= $this->_options["maxCommentLine"]) {
+                            $comment .= $commentLines[$i];
+                            continue;
+                        }
+                        $comment .= wordwrap($commentLines[$i], $this->_options["maxCommentLine"] );
+                        if ($i != ($lines-1)) {
+                            $comment .= "\n";
+                        }
+                    }
+                    $lines   = count(explode("\n",$comment));
+                }
+
                 $indent = $this->_getIndentString($token["depth"]);
 
-                if ($token["lines"] > 1) {
+                if ($lines > 1) {
                     $xml  = $indent . "<!--" . $this->_options["linebreak"]
-                          . $this->_indentTextBlock($token["data"], $token["depth"]+1, true)
+                          . $this->_indentTextBlock($comment, $token["depth"]+1, true)
                           . $indent . "-->" . $this->_options["linebreak"];
                 } else {
-                    $xml = $indent . sprintf( "<!-- %s -->", trim($token["data"]) ) . $this->_options["linebreak"];
+                    $xml = $indent . sprintf( "<!-- %s -->", trim($comment) ) . $this->_options["linebreak"];
                 }
                 break;      
 
