@@ -7,8 +7,8 @@
 * @author	Stephan Schmidt <schst@php.net>
 */
 
-    require_once '../Beautifier.php';
-    $fmt = new XML_Beautifier( array( "multiLineTags" => true ) );
+    require_once 'XML/Beautifier.php';
+    $fmt = new XML_Beautifier( array( "multilineTags" => true ) );
     $result = $fmt->formatFile('test.xml', 'test2.xml');
 
     echo "<h3>Original file</h3>";

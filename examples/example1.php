@@ -7,7 +7,7 @@
 * @author	Stephan Schmidt <schst@php.net>
 */
 
-    require_once '../Beautifier.php';
+    require_once 'XML/Beautifier.php';
     $fmt = new XML_Beautifier();
     $result = $fmt->formatFile('test.xml', 'test2.xml');
 

@@ -80,6 +80,12 @@ define('XML_BEAUTIFIER_XML_DECLARATION', 32);
 define('XML_BEAUTIFIER_DEFAULT', 128);
 
 /**
+ * overwrite the original file
+ */
+define('XML_BEAUTIFIER_OVERWRITE', -1);
+
+
+/**
  * could not write to output file
  */
 define('XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE', 151);
@@ -99,12 +105,24 @@ define('XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE', 151);
  * XML_Beautifier is parsing an XML document with a SAX based
  * parser and builds tokens of tags, comments, entities, data, etc.
  * These tokens are then serialized and indented with your indent
- * string.
+ * string. Future versions will include a separation of the 'tokenizer'
+ * and the serializer, so it will be possible to create a syntax
+ * highlighted HTML document, image or anything else from an XML
+ * document.
  *
+ * Example 1: Formatting a file
  * <code>
  * require_once 'XML/Beautifier.php';
  * $fmt = new XML_Beautifier();
  * $result = $fmt->formatFile('oldFile.xml', 'newFile.xml');
+ * </code>
+ *
+ * Example 2: Formatting a string
+ * <code>
+ * require_once 'XML/Beautifier.php';
+ * $xml = '<root><foo   bar = "pear"/></root>';
+ * $fmt = new XML_Beautifier();
+ * $result = $fmt->formatString($xml);
  * </code>
  *
  * @category XML
@@ -164,15 +182,17 @@ class XML_Beautifier extends XML_Parser {
     *
     * @access public
     * @param  string    $file       filename
-    * @param  string    $newFile    filename for beautified XML file (if none is given, the original file is overwritetn)
-    * @return boolean   true on success
+    * @param  mixed     $newFile    filename for beautified XML file (if none is given, the XML string will be returned.)
+    *                               if you want overwrite the original file, use XML_BEAUTIFIER_OVERWRITE
+    * @return mixed                 XML string of no file should be written, true if file could be written
     * @throws PEAR_Error
     */   
     function formatFile($file, $newFile = null)
     {
-        if ($newFile == $null) {
+        if ($newFile == XML_BEAUTIFIER_OVERWRITE) {
             $newFile = $file;
         }
+    
         $this->XML_Parser();
         $this->_resetVars();
         $this->setInputFile( $file );
@@ -182,9 +202,14 @@ class XML_Beautifier extends XML_Parser {
         }
         $xml = $this->_format();     
 
-        if( !$fp = fopen($newFile, "w")) {
+        if ($newFile == null) {
+            return $xml;
+        }
+        
+        if (!is_writeable($newFile)) {
             return $this->raiseError("Could not write to output file", XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE);
         }
+        $fp = @fopen($newFile, "w");
         flock($fp, LOCK_EX);
         fwrite($fp, $xml);
         flock($fp, LOCK_UN);
@@ -271,6 +296,11 @@ class XML_Beautifier extends XML_Parser {
                     }
                 }
                 
+                if ($this->_options["multilineTags"] == true) {
+                    $attIndent = $indent . str_repeat(" ", (2+strlen($struct["tagname"])));
+                } else {
+                    $attIndent = null;
+                }
                 // check for children
                 switch ($struct["contains"]) {
                     
@@ -278,12 +308,12 @@ class XML_Beautifier extends XML_Parser {
                     case    XML_BEAUTIFIER_CDATA:
                     case    XML_BEAUTIFIER_EMPTY:
                         $data = $struct["children"][0]["data"];
-                        $xml  = $indent . XML_Util::createTag($struct["tagname"], $struct["attribs"], $data, $this->_options["multilineTags"])
+                        $xml  = $indent . XML_Util::createTag($struct["tagname"], $struct["attribs"], $data, null, $this->_options["multilineTags"], $attIndent)
                               . $this->_options["linebreak"];
                         break;
                     // contains mixed content
                     default:
-                        $xml = $indent . XML_Util::createStartElement($struct["tagname"], $struct["attribs"], $this->_options["multilineTags"])
+                        $xml = $indent . XML_Util::createStartElement($struct["tagname"], $struct["attribs"], null, $this->_options["multilineTags"], $attIndent)
                              . $this->_options["linebreak"];
                         
                         $cnt = count($struct["children"]);
@@ -328,9 +358,9 @@ class XML_Beautifier extends XML_Parser {
             case    XML_BEAUTIFIER_PI:
                 $indent = $this->_getIndentString($struct["depth"]);
 
-                $xml  = $indent."<?".$struct["target"].$this->_options["linebreak"];
-                $xml .= $this->_indentTextBlock(rtrim($struct["data"]), $struct["depth"]);
-                $xml .= $indent."?>".$this->_options["linebreak"];
+                $xml  = $indent."<?".$struct["target"].$this->_options["linebreak"]
+                      . $this->_indentTextBlock(rtrim($struct["data"]), $struct["depth"])
+                      . $indent."?>".$this->_options["linebreak"];
                 break;      
 
             /*
@@ -340,9 +370,9 @@ class XML_Beautifier extends XML_Parser {
                 $indent = $this->_getIndentString($struct["depth"]);
 
                 if ($struct["lines"] > 1) {
-                    $xml  = $indent . "<!--" . $this->_options["linebreak"];
-                    $xml .= $this->_indentTextBlock($struct["data"], $struct["depth"]+1, true);
-                    $xml .= $indent . "-->" . $this->_options["linebreak"];
+                    $xml  = $indent . "<!--" . $this->_options["linebreak"]
+                          . $this->_indentTextBlock($struct["data"], $struct["depth"]+1, true)
+                          . $indent . "-->" . $this->_options["linebreak"];
                 } else {
                     $xml = $indent . sprintf( "<!-- %s -->", trim($struct["data"]) ) . $this->_options["linebreak"];
                 }
