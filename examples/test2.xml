@@ -19,25 +19,11 @@
         &foo;
         &bar;
         <intro>
-            <!--
-                This
-                Comment
-                has more
-                than one
-                line.
-            -->
+            <!-- This Comment has more than one line. -->
             <introtitle>Welcome to PHP Application Tools &amp; PEAR!</introtitle>
             <para>
                 If you&apos;re new to pat, and would like
-                <!--
-                    This is a
-                    comment
-                    in a
-                    single
-                    line that
-                    contains
-                    an &amp;
-                -->
+                <!-- This is a comment in a single line that contains an &amp; -->
                 to know what we do here, take a look at
                 <link url="/about/project.xml">&quot;About Pat&quot;</link>
                 or check out the

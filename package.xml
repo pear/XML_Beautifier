@@ -41,8 +41,8 @@ did some small cleanup</notes>
     <provides type="function" name="XML_Beautifier::apiVersion" />
     <filelist>
       <file role="php" baseinstalldir="XML" md5sum="8ee95946415e3832061a9d54d452a983" name="Beautifier/Renderer.php"/>
-      <file role="php" baseinstalldir="XML" md5sum="6a4af2b1f7a059993f32e58f705a1eaf" name="Beautifier/Tokenizer.php"/>
-      <file role="php" baseinstalldir="XML" md5sum="1b9d5bbde89d56ef995cda20c06d069a" name="Beautifier/Renderer/Plain.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="7c9fd3cd53be10ee770891d376856e41" name="Beautifier/Tokenizer.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="6896aec67cda7b5c8aec64621ec114df" name="Beautifier/Renderer/Plain.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="86966de82b256213db088a8fc8594f22" name="examples/example1.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="0c6b1dcf6ab46a38736c49c06f604ac5" name="examples/example2.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="596913e020cc87fed86ca0bafd93e690" name="examples/example3.php"/>
@@ -50,7 +50,7 @@ did some small cleanup</notes>
       <file role="doc" baseinstalldir="XML" md5sum="57f2ced123bf454651765c37811bd677" name="examples/example5.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="5dac5494cba9cb4f0ba76f861c7b2dd5" name="examples/example6.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="553ed0097ee4d61490ea0ff4d186dbd6" name="examples/test.xml"/>
-      <file role="doc" baseinstalldir="XML" md5sum="6f1fee18ad90a25125c6e1ee387ea9d5" name="examples/test2.xml"/>
+      <file role="doc" baseinstalldir="XML" md5sum="149ebc9269aa2c97ecbe3285a3c2250d" name="examples/test2.xml"/>
       <file role="php" baseinstalldir="XML" md5sum="cda1126f6e4e4504d15943d3a3d768c5" name="Beautifier.php"/>
     </filelist>
   </release>
