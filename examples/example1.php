@@ -10,6 +10,11 @@
     require_once 'XML/Beautifier.php';
     $fmt = new XML_Beautifier();
     $result = $fmt->formatFile('test.xml', 'test2.xml');
+    
+    if (PEAR::isError($result)) {
+        echo $result->getMessage();
+        exit();
+    }
 
     echo "<h3>Original file</h3>";
     echo "<pre>";
