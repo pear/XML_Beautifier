@@ -37,7 +37,7 @@ $result = $package->setOptions(array(
     'filelistgenerator' => 'cvs',
     'ignore'            => array('package.php', 'package.xml'),
     'notes'             => $notes,
-    'simpleoutput'      => false,
+    'simpleoutput'      => true,
     'baseinstalldir'    => 'XML',
     'packagedirectory'  => './',
     'dir_roles'         => array('docs' => 'doc',
