@@ -112,9 +112,26 @@ class XML_Beautifier_Renderer {
                 continue;
             }
 
+            /**
+            * remove whitespace
+            */
+            if( $this->_options['removeLineBreaks'] == true )
+            {
+                $children[$i]['data'] = trim($children[$i]['data']);
+                if( $children[$i]['data'] == '' ) {
+                    continue;
+                }
+            }
+
             if ($inCData) {
                 $tmp = array_pop($token["children"]);
-                $tmp["data"] .= " " . $children[$i]["data"];
+
+                if( $children[$i]['data'] != '' ) {
+                    if( $tmp['data'] != '' && $this->_options['removeLineBreaks'] == true ) {
+                        $tmp['data'] .= ' ';
+                    }
+                    $tmp["data"] .= $children[$i]["data"];
+                }
                 array_push($token["children"], $tmp);
             } else {
                 array_push($token["children"], $children[$i]);
@@ -144,6 +161,8 @@ class XML_Beautifier_Renderer {
             if ($trim) {
                 $tmp[$i] = trim($tmp[$i]);
             }
+            if( $tmp[$i] == '' )
+                continue;
             $xml .= $indent.$tmp[$i].$this->_options["linebreak"];
         }
         return $xml;

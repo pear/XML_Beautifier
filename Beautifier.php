@@ -16,6 +16,10 @@
 // | Authors: Stephan Schmidt <schst@php.net>                             |
 // +----------------------------------------------------------------------+
 
+if( !defined( 'XML_BEAUTIFIER_INCLUDE_PATH' ) ) {
+    define( 'XML_BEAUTIFIER_INCLUDE_PATH', 'XML/Beautifier' );
+}
+
 /**
  * XML/Beautifier.php
  *
@@ -133,6 +137,8 @@ class XML_Beautifier {
     * @access private
     */
     var $_defaultOptions = array(
+                         "removeLineBreaks"  => true,
+                         "removeLeadingSpace"=> true,       // not implemented, yet
                          "indent"            => "    ",
                          "linebreak"         => "\n",
                          "caseFolding"       => false,
@@ -223,7 +229,7 @@ class XML_Beautifier {
          * Split the document into tokens
          * using the XML_Tokenizer
          */
-        require_once "XML/Beautifier/Tokenizer.php";
+        require_once XML_BEAUTIFIER_INCLUDE_PATH . '/Tokenizer.php';
         $tokenizer = new XML_Beautifier_Tokenizer();
         
         $tokens = $tokenizer->tokenize( $file, true );
@@ -270,7 +276,7 @@ class XML_Beautifier {
          * Split the document into tokens
          * using the XML_Tokenizer
          */
-        require_once "XML/Beautifier/Tokenizer.php";
+        require_once XML_BEAUTIFIER_INCLUDE_PATH . '/Tokenizer.php';
         $tokenizer = new XML_Beautifier_Tokenizer();
         
         $tokens = $tokenizer->tokenize( $string, false );
@@ -306,7 +312,7 @@ class XML_Beautifier {
     */
     function &_loadRenderer($name, $options = array())
     {
-        $file = "XML/Beautifier/Renderer/$name.php";
+        $file = XML_BEAUTIFIER_INCLUDE_PATH . "/Renderer/$name.php";
         $class = "XML_Beautifier_Renderer_$name";
 
         @include_once $file;

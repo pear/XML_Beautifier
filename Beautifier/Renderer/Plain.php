@@ -32,7 +32,7 @@ require_once 'XML/Util.php';
 /**
  * Renderer base class
  */
-require_once 'XML/Beautifier/Renderer.php';
+require_once XML_BEAUTIFIER_INCLUDE_PATH . '/Renderer.php';
 
 /**
  * Basic XML Renderer for XML Beautifier
@@ -69,7 +69,7 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
     /**
      * serialize a token
      *
-     * This method doeas the actual beautifying.
+     * This method does the actual beautifying.
      *
      * @access  private 
      * @param   array   $token structure that should be serialized
@@ -115,6 +115,12 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
                         } else {
                             $data = '';
                         }
+
+                        if( strstr( $data, "\n" ) )
+                        {
+                            $data   =   "\n" . $this->_indentTextBlock( $data, $token['depth']+1, true );
+                        } 
+                        
                         $xml  = $indent . XML_Util::createTag($token["tagname"], $token["attribs"], $data, null, XML_UTIL_REPLACE_ENTITIES, $this->_options["multilineTags"], $attIndent)
                               . $this->_options["linebreak"];
                         break;
@@ -143,6 +149,7 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
                 } else {
                     $xml = "";
                 }
+				
                 $xml .= XML_Util::replaceEntities( $token["data"] ) . $this->_options["linebreak"];
                 break;      
 

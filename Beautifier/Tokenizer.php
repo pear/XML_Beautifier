@@ -146,11 +146,6 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
      */
     function cdataHandler($parser, $cdata)
     {
-        /**
-         * remove whitespace
-         */
-        $cdata = trim($cdata);
-
         if ((string)$cdata === '') {
             return true;
         }
