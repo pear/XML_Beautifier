@@ -139,6 +139,7 @@ class XML_Beautifier_Renderer {
         $indent = $this->_getIndentString($depth);
         $tmp = explode("\n", $text);
         $cnt = count($tmp);
+		$xml = '';
         for ($i = 0; $i < $cnt; $i++ ) {
             if ($trim) {
                 $tmp[$i] = trim($tmp[$i]);

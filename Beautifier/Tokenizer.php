@@ -349,7 +349,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     function _getLastToken()
     {
         $parent = array_pop($this->_struct);
-        if (is_array($parent["children"])) {
+        if (isset($parent["children"]) && is_array($parent["children"])) {
             $last = array_pop($parent["children"]);
             array_push($parent["children"], $last);
         } else {
