@@ -27,6 +27,7 @@
  * @author   Stephan Schmidt <schst@php.net>
  * @todo     option to specify inline tags
  * @todo     beautify DTD and XML declaration
+ * @todo     driver-based output to create syntax-highlighted XML
  */
 
 /**
@@ -127,7 +128,7 @@ define('XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE', 151);
  *
  * @category XML
  * @package  XML_Beautifier
- * @version  0.2.1
+ * @version  0.2.2
  * @author   Stephan Schmidt <schst@php.net>
  */
 class XML_Beautifier extends XML_Parser {
