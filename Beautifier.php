@@ -127,7 +127,7 @@ define('XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE', 151);
  *
  * @category XML
  * @package  XML_Beautifier
- * @version  0.1
+ * @version  0.2
  * @author   Stephan Schmidt <schst@php.net>
  */
 class XML_Beautifier extends XML_Parser {
@@ -261,7 +261,7 @@ class XML_Beautifier extends XML_Parser {
     */
     function apiVersion()
     {
-        return "0.1";
+        return "0.2";
     }
 
     /**
