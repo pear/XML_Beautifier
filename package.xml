@@ -13,31 +13,43 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.2.2</version>
-    <date>2003-11-22</date>
+    <version>0.3</version>
+    <date>2003-12-14</date>
     <license>PHP License</license>
     <state>beta</state>
-    <notes>fixed whitespace issues (Davey),
-fixed two notices (Davey)</notes>
+    <notes>* Did some refactoring:
+The package is now split into a tokenizer and renderers. This will allow
+different renderers to be added later. Syntax-Highlighter will follow.
+* Fixed bug that caused corrupt DTDs.</notes>
     <deps>
       <dep type="php" rel="ge">4.2.0</dep>
       <dep type="pkg" rel="ge" version="0.4.1">XML_Util</dep>
       <dep type="pkg" rel="has">XML_Parser</dep>
     </deps>
-    <provides type="class" name="XML_Beautifier" extends="XML_Parser" />
+    <provides type="class" name="XML_Beautifier_Renderer" />
+    <provides type="function" name="XML_Beautifier_Renderer::serialize" />
+    <provides type="function" name="XML_Beautifier_Renderer::normalize" />
+    <provides type="class" name="XML_Beautifier_Tokenizer" extends="XML_Parser" />
+    <provides type="function" name="XML_Beautifier_Tokenizer::tokenize" />
+    <provides type="class" name="XML_Beautifier_Renderer_Plain" extends="XML_Beautifier_Renderer" />
+    <provides type="function" name="XML_Beautifier_Renderer_Plain::serialize" />
+    <provides type="class" name="XML_Beautifier" />
     <provides type="function" name="XML_Beautifier::formatFile" />
     <provides type="function" name="XML_Beautifier::formatString" />
     <provides type="function" name="XML_Beautifier::apiVersion" />
     <filelist>
-      <file role="doc" baseinstalldir="XML" md5sum="9fc171a4136620d884337e18359daa02" name="examples/example1.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="8ee95946415e3832061a9d54d452a983" name="Beautifier/Renderer.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="0a9336ea794d7ac1918c0221d5939580" name="Beautifier/Tokenizer.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="5031139a500bfa1a28e6529a9fb6afdf" name="Beautifier/Renderer/Plain.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="86966de82b256213db088a8fc8594f22" name="examples/example1.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="0c6b1dcf6ab46a38736c49c06f604ac5" name="examples/example2.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="596913e020cc87fed86ca0bafd93e690" name="examples/example3.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="6485db9705dde5cae386817dbd199ddd" name="examples/example4.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="57f2ced123bf454651765c37811bd677" name="examples/example5.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="12cdbba936f6b48f43b83ea1a2884353" name="examples/example6.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="553ed0097ee4d61490ea0ff4d186dbd6" name="examples/test.xml"/>
-      <file role="doc" baseinstalldir="XML" md5sum="0e1f67bce2dc8cbf0fe8b2a52e389f25" name="examples/test2.xml"/>
-      <file role="php" baseinstalldir="XML" md5sum="a8a0b484ca08785a7dd50bc4937c49c5" name="Beautifier.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="d7bb09eefb4d0938d0f8c1066dd453b5" name="examples/test2.xml"/>
+      <file role="php" baseinstalldir="XML" md5sum="d2c9a5372bf8f1699cd5c82d562bcb48" name="Beautifier.php"/>
     </filelist>
   </release>
   <changelog>
@@ -62,6 +74,16 @@ fixed two notices (Davey)</notes>
       <state>beta</state>
       <notes>fixed whitespace issues (Davey),
 fixed two notices (Davey)</notes>
+    </release>
+    <release>
+      <version>0.3</version>
+      <date>2003-12-14</date>
+      <license>PHP License</license>
+      <state>beta</state>
+      <notes>* Did some refactoring:
+The package is now split into a tokenizer and renderers. This will allow
+different renderers to be added later. Syntax-Highlighter will follow.
+* Fixed bug that caused corrupt DTDs.</notes>
     </release>
   </changelog>
 </package>
