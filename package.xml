@@ -13,25 +13,19 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0</version>
-    <date>2003-12-21</date>
+    <version>1.0.1</version>
+    <date>2004-01-12</date>
     <license>PHP License</license>
     <state>stable</state>
-    <notes>Changed state to stable (API will not change from now on)
-added methods to set option(s)
-did some small cleanup</notes>
+    <notes>fixed bug #556 (notices)</notes>
     <deps>
       <dep type="php" rel="ge">4.2.0</dep>
       <dep type="pkg" rel="ge" version="0.5">XML_Util</dep>
       <dep type="pkg" rel="has">XML_Parser</dep>
     </deps>
     <provides type="class" name="XML_Beautifier_Renderer" />
-    <provides type="function" name="XML_Beautifier_Renderer::serialize" />
-    <provides type="function" name="XML_Beautifier_Renderer::normalize" />
     <provides type="class" name="XML_Beautifier_Tokenizer" extends="XML_Parser" />
-    <provides type="function" name="XML_Beautifier_Tokenizer::tokenize" />
     <provides type="class" name="XML_Beautifier_Renderer_Plain" extends="XML_Beautifier_Renderer" />
-    <provides type="function" name="XML_Beautifier_Renderer_Plain::serialize" />
     <provides type="class" name="XML_Beautifier" />
     <provides type="function" name="XML_Beautifier::resetOptions" />
     <provides type="function" name="XML_Beautifier::setOption" />
@@ -40,15 +34,15 @@ did some small cleanup</notes>
     <provides type="function" name="XML_Beautifier::formatString" />
     <provides type="function" name="XML_Beautifier::apiVersion" />
     <filelist>
-      <file role="php" baseinstalldir="XML" md5sum="8ee95946415e3832061a9d54d452a983" name="Beautifier/Renderer.php"/>
-      <file role="php" baseinstalldir="XML" md5sum="7c9fd3cd53be10ee770891d376856e41" name="Beautifier/Tokenizer.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="ffaf6da7121fce7162e0a85083fefd09" name="Beautifier/Renderer.php"/>
+      <file role="php" baseinstalldir="XML" md5sum="bff95c69fe70420c4c5312e3e0509bae" name="Beautifier/Tokenizer.php"/>
       <file role="php" baseinstalldir="XML" md5sum="6896aec67cda7b5c8aec64621ec114df" name="Beautifier/Renderer/Plain.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="86966de82b256213db088a8fc8594f22" name="examples/example1.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="0c6b1dcf6ab46a38736c49c06f604ac5" name="examples/example2.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="596913e020cc87fed86ca0bafd93e690" name="examples/example3.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="6485db9705dde5cae386817dbd199ddd" name="examples/example4.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="57f2ced123bf454651765c37811bd677" name="examples/example5.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="5dac5494cba9cb4f0ba76f861c7b2dd5" name="examples/example6.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="e77c0e6684083bf0ef4e47dba8fdd4da" name="examples/example1.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="083dae7bc56551fc681ca897e0d13b3a" name="examples/example2.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="c59676e7726c81466397ad2b1ef71857" name="examples/example3.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="38ef360651924bfe2767344309bf47d9" name="examples/example4.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="c2ed8597eb9636a59a61332ea4aaa337" name="examples/example5.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="5c156a8686a0c1ed9d049791bf0673b8" name="examples/example6.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="553ed0097ee4d61490ea0ff4d186dbd6" name="examples/test.xml"/>
       <file role="doc" baseinstalldir="XML" md5sum="149ebc9269aa2c97ecbe3285a3c2250d" name="examples/test2.xml"/>
       <file role="php" baseinstalldir="XML" md5sum="cda1126f6e4e4504d15943d3a3d768c5" name="Beautifier.php"/>
@@ -95,6 +89,13 @@ different renderers to be added later. Syntax-Highlighter will follow.
       <notes>Changed state to stable (API will not change from now on)
 added methods to set option(s)
 did some small cleanup</notes>
+    </release>
+    <release>
+      <version>1.0.1</version>
+      <date>2004-01-12</date>
+      <license>PHP License</license>
+      <state>stable</state>
+      <notes>fixed bug #556 (notices)</notes>
     </release>
   </changelog>
 </package>
