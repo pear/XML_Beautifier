@@ -8,6 +8,8 @@
 *
 * @author	Stephan Schmidt <schst@php.net>
 */
+	error_reporting( E_ALL );
+
     $xmlString = '<xml><foo bar="tomato &amp; Cheese"/><argh>foobar</argh></xml>';
 
     require_once 'XML/Beautifier.php';
