@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
+<package version="1.0">
+  <name>XML_Beautifier</name>
+  <summary>Class to format XML documents.</summary>
+  <description>XML_Beautifier will add indentation and linebreaks to you XML files, replace all entities, format your comments and makes your document easier to read. You can influence the way your document is beautified with several options.</description>
+  <maintainers>
+    <maintainer>
+      <user>schst</user>
+      <name>Stephan Schmidt</name>
+      <email>schst@php.net</email>
+      <role>lead</role>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.1</version>
+    <date>2003-09-19</date>
+    <license>PHP License</license>
+    <state>beta</state>
+    <notes>proposal</notes>
+    <deps>
+      <dep type="pkg" rel="has">XML_Parser</dep>
+      <dep type="php" rel="ge">4.2.0</dep>
+    </deps>
+    <provides type="class" name="XML_Beautifier" extends="XML_Parser" />
+    <provides type="function" name="XML_Beautifier::formatFile" />
+    <provides type="function" name="XML_Beautifier::formatString" />
+    <provides type="function" name="XML_Beautifier::apiVersion" />
+    <filelist>
+      <file role="doc" baseinstalldir="XML" md5sum="9fc171a4136620d884337e18359daa02" name="examples/example1.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="80505583738674fee0e9e1bf1f6526bd" name="examples/example2.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="596913e020cc87fed86ca0bafd93e690" name="examples/example3.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="6485db9705dde5cae386817dbd199ddd" name="examples/example4.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="f406730cec5abd3fae629ae443c21fad" name="examples/example5.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="5b7f2bbec46d200e0c2cecdf4fcf3733" name="examples/test.xml"/>
+      <file role="doc" baseinstalldir="XML" md5sum="6d241c5dc41f4a54fe0ac1347eee72b1" name="examples/test2.xml"/>
+      <file role="php" baseinstalldir="XML" md5sum="b61ee7e135ff443fa8b75dc43cbed5c4" name="Beautifier.php"/>
+    </filelist>
+  </release>
+  <changelog>
+    <release>
+      <version>0.1</version>
+      <date>2003-09-19</date>
+      <license>PHP License</license>
+      <state>beta</state>
+      <notes>proposal</notes>
+    </release>
+  </changelog>
+</package>
