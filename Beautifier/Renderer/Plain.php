@@ -41,8 +41,7 @@ require_once XML_BEAUTIFIER_INCLUDE_PATH . '/Renderer.php';
  * @package  XML_Beautifier
  * @author   Stephan Schmidt <schst@php.net>
  * @todo     option to specify inline tags
- * @todo     option to specify treatment of whitespac in data sections
- * @todo     automatically create <![CDATA[ ]]> sections
+ * @todo     option to specify treatment of whitespace in data sections
  */
 class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
 
@@ -120,7 +119,7 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
                         {
                             $data   =   "\n" . $this->_indentTextBlock( $data, $token['depth']+1, true );
                         } 
-                        
+
                         $xml  = $indent . XML_Util::createTag($token["tagname"], $token["attribs"], $data, null, XML_UTIL_REPLACE_ENTITIES, $this->_options["multilineTags"], $attIndent)
                               . $this->_options["linebreak"];
                         break;
@@ -151,6 +150,19 @@ class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
                 }
 				
                 $xml .= XML_Util::replaceEntities( $token["data"] ) . $this->_options["linebreak"];
+                break;      
+
+            /*
+            * serialize CData section
+            */
+            case    XML_BEAUTIFIER_CDATA_SECTION:
+                if ($token["depth"] > 0) {
+                    $xml = str_repeat($this->_options["indent"], $token["depth"]);
+                } else {
+                    $xml = "";
+                }
+				
+                $xml .= '<![CDATA['.$token["data"].']]>' . $this->_options["linebreak"];
                 break;      
 
             /*

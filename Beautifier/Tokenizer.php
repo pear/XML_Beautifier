@@ -65,6 +65,13 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     var $_mode = "xml";
     
    /**
+    * indicates, whether parser is in cdata section
+    * @var    boolean
+    * @access private  
+    */
+	var $_inCDataSection = false;
+	
+   /**
     * Tokenize a document
     *
     * @param    string  $document   filename or XML document
@@ -150,8 +157,14 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
             return true;
         }
 
+		if ($this->_inCDataSection === true) {
+			$type = XML_BEAUTIFIER_CDATA_SECTION;
+		} else {
+			$type = XML_BEAUTIFIER_CDATA;
+		}
+		
         $struct = array(
-                         "type"  => XML_BEAUTIFIER_CDATA,
+                         "type"  => $type,
                          "data"  => $cdata,
                          "depth" => $this->_depth
                        );
@@ -168,7 +181,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
      * @param  string data
      * @return void
      */
-    function    piHandler($parser, $target, $data)
+    function piHandler($parser, $target, $data)
     {
         $struct = array(
                          "type"    => XML_BEAUTIFIER_PI,
@@ -268,6 +281,18 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
                              "depth"   => $this->_depth
                            );
         /*
+        * handle start of cdata section
+        */
+        } elseif ($data == "<![CDATA[") {
+			$this->_inCDataSection = true;
+			$struct = null;
+        /*
+        * handle end of cdata section
+        */
+        } elseif ($data == "]]>") {
+			$this->_inCDataSection = false;
+			$struct = null;
+        /*
         * handle XML declaration
         */
         } elseif (strncmp("<?", $data, 2) == 0) {
@@ -313,7 +338,9 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
                            );
         }
         
-        $this->_appendToParent($struct);
+		if (!is_null($struct)) {
+	        $this->_appendToParent($struct);
+		}
         return true;
     }
     
@@ -367,6 +394,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
         $this->_depth  = 0;
         $this->_struct = array();
         $this->_mode   = "xml";
+		$this->_inCDataSection = false;
     }
 }
 ?>

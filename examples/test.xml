@@ -17,6 +17,7 @@
 ?>
 &foo;&bar;
 <intro>
+<test><![CDATA[This is a CData section with an &. ]]></test>
    <!-- This Comment
 has more
     than one line.
