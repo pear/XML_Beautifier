@@ -65,13 +65,6 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     var $_mode = "xml";
     
    /**
-    * options for the tokenizer
-    * @var    array
-    * @access private
-    */
-    var $_options = array();
-    
-   /**
     * Tokenize a document
     *
     * @param    string  $document   filename or XML document
