@@ -36,7 +36,12 @@ Application Tools &amp; PEAR!</introtitle>
          <link url=
          "/about/project.xml">
          "About Pat"</link> 
-or
+or 
+<![CDATA[
+This CData section has several
+lines and an &amp; as well as an & in
+it...
+]]>
 check out the
 <link url="/about/projectsOverview.xml">"projects overview"</link>. Otherwise, you probably know your way 
 around

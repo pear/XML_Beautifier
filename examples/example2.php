@@ -10,7 +10,8 @@
 */
 	error_reporting( E_ALL );
 
-    $xmlString = '<xml><foo bar="tomato &amp; Cheese"/><argh>foobar<![CDATA[ Test ]]></argh></xml>';
+    $xmlString = '<xml><foo bar="tomato &amp; Cheese"/><argh>foobar<![CDATA[ Test
+	Test ]]></argh></xml>';
 
     require_once 'XML/Beautifier.php';
     $fmt = new XML_Beautifier();

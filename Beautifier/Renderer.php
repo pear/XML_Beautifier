@@ -100,14 +100,14 @@ class XML_Beautifier_Renderer {
         $children = $token["children"];
         $token["children"] = array();
         $cnt = count($children);
-        $inCData = false;
+        $currentMode = 0;
         for ($i = 0; $i < $cnt; $i++ )
         {
             // no data section
-            if ($children[$i]["type"] != XML_BEAUTIFIER_CDATA) {
+            if ($children[$i]["type"] != XML_BEAUTIFIER_CDATA && $children[$i]["type"] != XML_BEAUTIFIER_CDATA_SECTION) {
                 $children[$i] = $this->_normalizeToken($children[$i]);
 
-                $inCData = false;
+                $currentMode = 0;
                 array_push($token["children"], $children[$i]);
                 continue;
             }
@@ -123,7 +123,7 @@ class XML_Beautifier_Renderer {
                 }
             }
 
-            if ($inCData) {
+            if ($currentMode == $children[$i]["type"]) {
                 $tmp = array_pop($token["children"]);
 
                 if( $children[$i]['data'] != '' ) {
@@ -137,7 +137,7 @@ class XML_Beautifier_Renderer {
                 array_push($token["children"], $children[$i]);
             }
 
-            $inCData = true;
+            $currentMode = $children[$i]["type"];
         }
         return $token;
     }
