@@ -40,6 +40,9 @@ require_once 'XML/Beautifier/Renderer.php';
  * @category XML
  * @package  XML_Beautifier
  * @author   Stephan Schmidt <schst@php.net>
+ * @todo     option to specify inline tags
+ * @todo     option to specify treatment of whitespac in data sections
+ * @todo     automatically create <![CDATA[ ]]> sections
  */
 class XML_Beautifier_Renderer_Plain extends XML_Beautifier_Renderer {
 

@@ -4,13 +4,15 @@
     <!ENTITY bar SYSTEM "bar.xml">
 ]>
 <document title="Current News">
-    <meta foo="bar" project="none">
+    <meta foo="bar"
+          project="none">
         <keywords />
         <description />
         <author>Stephan Schmidt</author>
         <getMetaNav />
     </meta>
-    <page label="PHP Application Tools" sublabel="Current News">
+    <page label="PHP Application Tools"
+          sublabel="Current News">
         <?PHP
         for($i = 0; $i < count($_GET); $i++) {
                 echo    $_GET[$i]."<br>";

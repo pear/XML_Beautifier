@@ -25,9 +25,6 @@
  * @category XML
  * @package  XML_Beautifier
  * @author   Stephan Schmidt <schst@php.net>
- * @todo     option to specify inline tags
- * @todo     beautify DTD and XML declaration
- * @todo     driver-based output to create syntax-highlighted XML
  */
 
 /**
@@ -102,13 +99,11 @@ define('XML_BEAUTIFIER_ERROR_UNKNOWN_RENDERER', 152);
  * It is able to treat tags, data, processing instructions
  * comments, external entities and the XML prologue.
  *
- * XML_Beautifier is parsing an XML document with a SAX based
- * parser and builds tokens of tags, comments, entities, data, etc.
- * These tokens are then serialized and indented with your indent
- * string. Future versions will include a separation of the 'tokenizer'
- * and the serializer, so it will be possible to create a syntax
- * highlighted HTML document, image or anything else from an XML
- * document.
+ * XML_Beautifier is using XML_Beautifier_Tokenizer to parse an XML
+ * document with a SAX based parser and builds tokens of tags, comments,
+ * entities, data, etc.
+ * These tokens will be serialized and indented by a renderer 
+ * with your indent string.
  *
  * Example 1: Formatting a file
  * <code>
@@ -127,27 +122,33 @@ define('XML_BEAUTIFIER_ERROR_UNKNOWN_RENDERER', 152);
  *
  * @category XML
  * @package  XML_Beautifier
- * @version  0.3
+ * @version  1.0
  * @author   Stephan Schmidt <schst@php.net>
  */
 class XML_Beautifier {
+
+   /**
+    * default options for the output format
+    * @var    array
+    * @access private
+    */
+    var $_defaultOptions = array(
+                         "indent"            => "    ",
+                         "linebreak"         => "\n",
+                         "caseFolding"       => false,
+                         "caseFoldingTo"     => "uppercase",
+                         "normalizeComments" => false,
+                         "maxCommentLine"    => -1,
+                         "multilineTags"     => false
+                        );
 
    /**
     * options for the output format
     * @var    array
     * @access private
     */
-    var $_options = array(
-                         "whitespace"        => "trim",
-                         "indent"            => "    ",
-                         "linebreak"         => "\n",
-                         "caseFolding"       => false,
-                         "caseFoldingTo"     => "upper",
-                         "normalizeComments" => false,
-                         "maxCommentLine"    => -1,
-                         "multilineTags"     => false
-                        );
-
+    var $_options = array();
+    
    /**
     * Constructor
     *
@@ -159,8 +160,45 @@ class XML_Beautifier {
     */   
     function XML_Beautifier($options = array())
     {
-        $this->_options = array_merge($this->_options, $options);
+        $this->_options = array_merge($this->_defaultOptions, $options);
         $this->folding = false;
+    }
+
+   /**
+    * reset all options to default options
+    *
+    * @access   public
+    * @see      setOption(), XML_Beautifier(), setOptions()
+    */
+    function resetOptions()
+    {
+        $this->_options = $this->_defaultOptions;
+    }
+
+   /**
+    * set an option
+    *
+    * You can use this method if you do not want to set all options in the constructor
+    *
+    * @access   public
+    * @see      resetOptions(), XML_Beautifier(), setOptions()
+    */
+    function setOption($name, $value)
+    {
+        $this->_options[$name] = $value;
+    }
+    
+   /**
+    * set several options at once
+    *
+    * You can use this method if you do not want to set all options in the constructor
+    *
+    * @access   public
+    * @see      resetOptions(), XML_Beautifier()
+    */
+    function setOptions($options)
+    {
+        $this->_options = array_merge($this->_options, $options);
     }
 
    /**
@@ -290,7 +328,7 @@ class XML_Beautifier {
     */
     function apiVersion()
     {
-        return "0.3";
+        return "1.0";
     }
 }
 ?>

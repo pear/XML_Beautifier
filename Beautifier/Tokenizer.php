@@ -23,6 +23,7 @@
  * @package  XML_Beautifier
  * @author   Stephan Schmidt <schst@php.net>
  * @todo     tokenize DTD
+ * @todo     check for xml:space attribute
  */
 
 /**
@@ -34,7 +35,7 @@ require_once 'XML/Parser.php';
  * Tokenizer for XML_Beautifier
  *
  * This class breaks an XML document in seperate tokens
- * that will be rendered by an XML_Beaitifier renderer.
+ * that will be rendered by an XML_Beautifier renderer.
  *
  * @category XML
  * @package  XML_Beautifier
@@ -145,11 +146,10 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
      */
     function cdataHandler($parser, $cdata)
     {
+        /**
+         * remove whitespace
+         */
         $cdata = trim($cdata);
-        switch ($this->_options["whitespace"]) {
-            case "trim":
-                break;
-        }
 
         if ((string)$cdata === '') {
             return true;
