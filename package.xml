@@ -13,11 +13,11 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.2</version>
-    <date>2003-10-01</date>
+    <version>0.2.1</version>
+    <date>2003-11-11</date>
     <license>PHP License</license>
     <state>beta</state>
-    <notes>initial pear release</notes>
+    <notes>fixed bug #220</notes>
     <deps>
       <dep type="php" rel="ge">4.2.0</dep>
       <dep type="pkg" rel="ge" version="0.4.1">XML_Util</dep>
@@ -29,14 +29,14 @@
     <provides type="function" name="XML_Beautifier::apiVersion" />
     <filelist>
       <file role="doc" baseinstalldir="XML" md5sum="9fc171a4136620d884337e18359daa02" name="examples/example1.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="d2b9c69e61b34331c839dfafd2fd501d" name="examples/example2.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="0c6b1dcf6ab46a38736c49c06f604ac5" name="examples/example2.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="596913e020cc87fed86ca0bafd93e690" name="examples/example3.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="6485db9705dde5cae386817dbd199ddd" name="examples/example4.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="57f2ced123bf454651765c37811bd677" name="examples/example5.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="12cdbba936f6b48f43b83ea1a2884353" name="examples/example6.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="901033c50bcefb40f613ce748b31b8cd" name="examples/test.xml"/>
-      <file role="doc" baseinstalldir="XML" md5sum="451f0799f3bce1e1d7f63c1db32262e2" name="examples/test2.xml"/>
-      <file role="php" baseinstalldir="XML" md5sum="de46b78b9d8746b8b1a870bd2105491a" name="Beautifier.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="553ed0097ee4d61490ea0ff4d186dbd6" name="examples/test.xml"/>
+      <file role="doc" baseinstalldir="XML" md5sum="0e1f67bce2dc8cbf0fe8b2a52e389f25" name="examples/test2.xml"/>
+      <file role="php" baseinstalldir="XML" md5sum="ad6effca1f3ffe51408ff414a84a99f5" name="Beautifier.php"/>
     </filelist>
   </release>
   <changelog>
@@ -46,6 +46,13 @@
       <license>PHP License</license>
       <state>beta</state>
       <notes>initial pear release</notes>
+    </release>
+    <release>
+      <version>0.2.1</version>
+      <date>2003-11-11</date>
+      <license>PHP License</license>
+      <state>beta</state>
+      <notes>fixed bug #220</notes>
     </release>
   </changelog>
 </package>
