@@ -22,10 +22,10 @@ has more
     than one line.
                     -->
         <introtitle>Welcome to PHP
-Application Tools!</introtitle>
+Application Tools &amp; PEAR!</introtitle>
 <para>
         If you're new to pat, and would like
-        <!-- This is a comment in a single line -->
+        <!-- This is a comment in a single line that contains an &amp; -->
          to know
          
          what we do

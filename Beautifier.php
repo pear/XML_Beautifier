@@ -308,7 +308,7 @@ class XML_Beautifier extends XML_Parser {
                     case    XML_BEAUTIFIER_CDATA:
                     case    XML_BEAUTIFIER_EMPTY:
                         $data = $struct["children"][0]["data"];
-                        $xml  = $indent . XML_Util::createTag($struct["tagname"], $struct["attribs"], $data, null, $this->_options["multilineTags"], $attIndent)
+                        $xml  = $indent . XML_Util::createTag($struct["tagname"], $struct["attribs"], $data, null, XML_UTIL_REPLACE_ENTITIES, $this->_options["multilineTags"], $attIndent)
                               . $this->_options["linebreak"];
                         break;
                     // contains mixed content
@@ -336,7 +336,7 @@ class XML_Beautifier extends XML_Parser {
                 } else {
                     $xml = "";
                 }
-                $xml .= $struct["data"].$this->_options["linebreak"];
+                $xml .= XML_Util::replaceEntities( $struct["data"] ) . $this->_options["linebreak"];
                 break;      
 
             /*
@@ -391,7 +391,7 @@ class XML_Beautifier extends XML_Parser {
 			*/
             case    XML_BEAUTIFIER_DEFAULT:
 			default:
-                $xml    = $struct["data"];
+                $xml    = XML_Util::replaceEntities( $struct["data"] );
                 break;      
         }
         return $xml;

@@ -19,9 +19,9 @@
     <state>beta</state>
     <notes>initial pear release</notes>
     <deps>
+      <dep type="php" rel="ge">4.2.0</dep>
       <dep type="pkg" rel="ge" version="0.4.1">XML_Util</dep>
       <dep type="pkg" rel="has">XML_Parser</dep>
-      <dep type="php" rel="ge">4.2.0</dep>
     </deps>
     <provides type="class" name="XML_Beautifier" extends="XML_Parser" />
     <provides type="function" name="XML_Beautifier::formatFile" />
