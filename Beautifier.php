@@ -307,7 +307,11 @@ class XML_Beautifier extends XML_Parser {
                     // contains only CData or is empty
                     case    XML_BEAUTIFIER_CDATA:
                     case    XML_BEAUTIFIER_EMPTY:
+                        if (sizeof($struct["children"]) >= 1) {
                         $data = $struct["children"][0]["data"];
+                        } else {
+                            $data = '';
+                        }
                         $xml  = $indent . XML_Util::createTag($struct["tagname"], $struct["attribs"], $data, null, XML_UTIL_REPLACE_ENTITIES, $this->_options["multilineTags"], $attIndent)
                               . $this->_options["linebreak"];
                         break;
@@ -409,7 +413,7 @@ class XML_Beautifier extends XML_Parser {
      */
     function _normalize($struct)
     {
-        if (!is_array($struct["children"]) || empty($struct["children"])) {
+        if ((isset($struct["children"])) && !is_array($struct["children"]) || empty($struct["children"])) {
             return $struct;
         }
 
