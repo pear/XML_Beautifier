@@ -26,7 +26,7 @@
  * @package  XML_Beautifier
  * @author   Stephan Schmidt <schst@php.net>
  * @todo     option to specify inline tags
- * @todo	 beautify DTD and XML declaration
+ * @todo     beautify DTD and XML declaration
  */
 
 /**
@@ -138,13 +138,13 @@ class XML_Beautifier extends XML_Parser {
     * @access private
     */
     var $_options = array(
-                         "whitespace"    	 => "trim",
-                         "indent"        	 => "    ",
-                         "linebreak"     	 => "\n",
-                         "caseFolding"   	 => false,
+                         "whitespace"        => "trim",
+                         "indent"            => "    ",
+                         "linebreak"         => "\n",
+                         "caseFolding"       => false,
                          "caseFoldingTo"     => "upper",
-						 "normalizeComments" => false,
-						 "maxCommentLine"	 => -1,
+                         "normalizeComments" => false,
+                         "maxCommentLine"    => -1,
                          "multilineTags"     => false
                         );
 
@@ -165,11 +165,11 @@ class XML_Beautifier extends XML_Parser {
    /**
     * Constructor
     *
-	* This is only used to specify the options of the
+    * This is only used to specify the options of the
     * beautifying process.
-	*
+    *
     * @access public
-	* @param  array  $options   options that override default options
+    * @param  array  $options   options that override default options
     */   
     function XML_Beautifier($options = array())
     {
@@ -244,7 +244,7 @@ class XML_Beautifier extends XML_Parser {
     */
     function _format()
     {
-		$xml = "";
+        $xml = "";
         foreach ($this->_struct as $struct) {
             $struct = $this->_normalize($struct);
             $xml   .= $this->_serialize($struct);
@@ -277,8 +277,8 @@ class XML_Beautifier extends XML_Parser {
         switch ($struct["type"]) {
 
             /*
-			* serialize XML Element
-			*/
+            * serialize XML Element
+            */
             case    XML_BEAUTIFIER_ELEMENT:
                 $indent = $this->_getIndentString($struct["depth"]);
 
@@ -328,8 +328,8 @@ class XML_Beautifier extends XML_Parser {
                 break;
             
             /*
-			* serialize CData
-			*/
+            * serialize CData
+            */
             case    XML_BEAUTIFIER_CDATA:
                 if ($struct["depth"] > 0) {
                     $xml = str_repeat($this->_options["indent"], $struct["depth"]);
@@ -340,8 +340,8 @@ class XML_Beautifier extends XML_Parser {
                 break;      
 
             /*
-			* serialize entity
-			*/
+            * serialize entity
+            */
             case    XML_BEAUTIFIER_ENTITY:
                 if ($struct["depth"] > 0) {
                     $xml = str_repeat($this->_options["indent"], $struct["depth"]);
@@ -353,8 +353,8 @@ class XML_Beautifier extends XML_Parser {
 
 
             /*
-			* serialize Processing instruction
-			*/
+            * serialize Processing instruction
+            */
             case    XML_BEAUTIFIER_PI:
                 $indent = $this->_getIndentString($struct["depth"]);
 
@@ -364,8 +364,8 @@ class XML_Beautifier extends XML_Parser {
                 break;      
 
             /*
-			* comments
-			*/
+            * comments
+            */
             case    XML_BEAUTIFIER_COMMENT:
                 $indent = $this->_getIndentString($struct["depth"]);
 
@@ -379,18 +379,18 @@ class XML_Beautifier extends XML_Parser {
                 break;      
 
             /*
-			* xml declaration
-			*/
+            * xml declaration
+            */
             case    XML_BEAUTIFIER_XML_DECLARATION:
                 $indent = $this->_getIndentString($struct["depth"]);
                 $xml    = $indent . XML_Util::getXMLDeclaration($struct["version"], $struct["encoding"], $struct["standalone"]);
                 break;      
 
             /*
-			* all other elements
-			*/
+            * all other elements
+            */
             case    XML_BEAUTIFIER_DEFAULT:
-			default:
+            default:
                 $xml    = XML_Util::replaceEntities( $struct["data"] );
                 break;      
         }
@@ -453,7 +453,7 @@ class XML_Beautifier extends XML_Parser {
      */
     function startHandler($parser, $element, $attribs)
     {
-		$struct	= array(
+        $struct = array(
                          "type"     => XML_BEAUTIFIER_ELEMENT,
                          "tagname"  => $element,
                          "attribs"  => $attribs,
@@ -507,7 +507,7 @@ class XML_Beautifier extends XML_Parser {
             return true;
         }
 
-		$struct	= array(
+        $struct = array(
                          "type"  => XML_BEAUTIFIER_CDATA,
                          "data"  => $cdata,
                          "depth" => $this->_depth
@@ -527,14 +527,14 @@ class XML_Beautifier extends XML_Parser {
      */
     function    piHandler($parser, $target, $data)
     {
-		$struct	= array(
+        $struct = array(
                          "type"    => XML_BEAUTIFIER_PI,
                          "target"  => $target,
                          "data"    => $data,
                          "depth"   => $this->_depth
                        );
 
-		$this->_appendToParent($struct);
+        $this->_appendToParent($struct);
     }
     
     /**
@@ -548,7 +548,7 @@ class XML_Beautifier extends XML_Parser {
      */
     function entityrefHandler($parser, $open_entity_names, $base, $system_id, $public_id)
     {
-		$struct	= array(
+        $struct = array(
                          "type"    => XML_BEAUTIFIER_ENTITY,
                          "name"    => $open_entity_names,
                          "depth"   => $this->_depth
@@ -568,65 +568,65 @@ class XML_Beautifier extends XML_Parser {
      */
     function defaultHandler($parser, $data)
     {
-		/*
-		* handle comment
-		*/
-		if (strncmp("<!--", $data, 4) == 0) {
+        /*
+        * handle comment
+        */
+        if (strncmp("<!--", $data, 4) == 0) {
         
             $regs = array();
             eregi("<!--(.+)-->", $data, $regs);
             $comment = trim($regs[1]);
-			$lines	 = count(explode("\n",$comment));
-			
-			/*
-			* normalize comment, i.e. combine it to one
-			* line and remove whitespace
-			*/
-			if ($this->_options["normalizeComments"] && $lines > 1){
-				$comment = preg_replace("/\s\s+/s", " ", str_replace( "\n" , " ", $comment));
-				$lines   = 1;
-			}
+            $lines   = count(explode("\n",$comment));
+            
+            /*
+            * normalize comment, i.e. combine it to one
+            * line and remove whitespace
+            */
+            if ($this->_options["normalizeComments"] && $lines > 1){
+                $comment = preg_replace("/\s\s+/s", " ", str_replace( "\n" , " ", $comment));
+                $lines   = 1;
+            }
 
-			/*
-			* check for the maximum length of one line
-			*/
-			if ($this->_options["maxCommentLine"] > 0) {
-				if ($lines > 1) {
-					$commentLines = explode("\n", $comment);
-				} else {
-					$commentLines = array($comment);
-				}
+            /*
+            * check for the maximum length of one line
+            */
+            if ($this->_options["maxCommentLine"] > 0) {
+                if ($lines > 1) {
+                    $commentLines = explode("\n", $comment);
+                } else {
+                    $commentLines = array($comment);
+                }
 
-				$comment = "";
-				for ($i = 0; $i < $lines; $i++) {
-					if (strlen($commentLines[$i]) <= $this->_options["maxCommentLine"]) {
-						$comment .= $commentLines[$i];
-						continue;
-					}
-					$comment .= wordwrap($commentLines[$i], $this->_options["maxCommentLine"] );
-					if ($i != ($lines-1)) {
-						$comment .= "\n";
-					}
-				}
-				$lines	 = count(explode("\n",$comment));
-			}
-			
-			$struct	= array(
-	                         "type"    => XML_BEAUTIFIER_COMMENT,
-	                         "data"    => $comment,
+                $comment = "";
+                for ($i = 0; $i < $lines; $i++) {
+                    if (strlen($commentLines[$i]) <= $this->_options["maxCommentLine"]) {
+                        $comment .= $commentLines[$i];
+                        continue;
+                    }
+                    $comment .= wordwrap($commentLines[$i], $this->_options["maxCommentLine"] );
+                    if ($i != ($lines-1)) {
+                        $comment .= "\n";
+                    }
+                }
+                $lines   = count(explode("\n",$comment));
+            }
+            
+            $struct = array(
+                             "type"    => XML_BEAUTIFIER_COMMENT,
+                             "data"    => $comment,
                              "lines"   => $lines,
-	                         "depth"   => $this->_depth
-	                       );
-		/*
-		* handle XML declaration
-		*/
-		} elseif (strncmp("<?", $data, 2) == 0) {
-    		preg_match_all('/([a-zA-Z_]+)="((?:\\\.|[^"\\\])*)"/', $data, $match);
+                             "depth"   => $this->_depth
+                           );
+        /*
+        * handle XML declaration
+        */
+        } elseif (strncmp("<?", $data, 2) == 0) {
+            preg_match_all('/([a-zA-Z_]+)="((?:\\\.|[^"\\\])*)"/', $data, $match);
             $cnt = count($match[1]);
             $attribs = array();
-    		for ($i = 0; $i < $cnt; $i++) {
+            for ($i = 0; $i < $cnt; $i++) {
                 $attribs[$match[1][$i]] = $match[2][$i];
-    		}
+            }
 
             if (!isset($attribs["version"])) {
                 $attribs["version"] = "1.0";
@@ -638,24 +638,24 @@ class XML_Beautifier extends XML_Parser {
                 $attribs["standalone"] = true;
             }
             
-			$struct	= array(
-	                         "type"       => XML_BEAUTIFIER_XML_DECLARATION,
-	                         "version"    => $attribs["version"],
-	                         "encoding"   => $attribs["encoding"],
-	                         "standalone" => $attribs["standalone"],
-	                         "depth"      => $this->_depth
-	                       );
-		} else {
-		/*
-		* handle all other data
-		*/
-			$struct	= array(
-	                         "type"    => XML_BEAUTIFIER_DEFAULT,
-	                         "data"    => $data,
-	                         "depth"   => $this->_depth
-	                       );
-		}
-		
+            $struct = array(
+                             "type"       => XML_BEAUTIFIER_XML_DECLARATION,
+                             "version"    => $attribs["version"],
+                             "encoding"   => $attribs["encoding"],
+                             "standalone" => $attribs["standalone"],
+                             "depth"      => $this->_depth
+                           );
+        } else {
+        /*
+        * handle all other data
+        */
+            $struct = array(
+                             "type"    => XML_BEAUTIFIER_DEFAULT,
+                             "data"    => $data,
+                             "depth"   => $this->_depth
+                           );
+        }
+        
         $this->_appendToParent($struct);
         return true;
     }
@@ -675,9 +675,9 @@ class XML_Beautifier extends XML_Parser {
         $tmp = explode("\n", $text);
         $cnt = count($tmp);
         for ($i = 0; $i < $cnt; $i++ ) {
-			if ($trim) {
-				$tmp[$i] = trim($tmp[$i]);
-			}
+            if ($trim) {
+                $tmp[$i] = trim($tmp[$i]);
+            }
             $xml .= $indent.$tmp[$i].$this->_options["linebreak"];
         }
         return $xml;
