@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE page [
     <!ENTITY foo SYSTEM "foo.xml">
     <!ENTITY bar SYSTEM "bar.xml">

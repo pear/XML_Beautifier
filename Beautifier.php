@@ -72,9 +72,14 @@ define('XML_BEAUTIFIER_XML_DECLARATION', 32);
 define('XML_BEAUTIFIER_DT_DECLARATION', 64);
 
 /**
+ * cdata section
+ */
+define('XML_BEAUTIFIER_CDATA_SECTION', 128);
+
+/**
  * default
  */
-define('XML_BEAUTIFIER_DEFAULT', 128);
+define('XML_BEAUTIFIER_DEFAULT', 256);
 
 /**
  * overwrite the original file

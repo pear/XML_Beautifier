@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <!DOCTYPE page [
     <!ENTITY foo SYSTEM "foo.xml">
     <!ENTITY bar SYSTEM "bar.xml">
@@ -20,7 +20,7 @@
         &bar;
         <intro>
             <test>
-                <![CDATA[ This is a CData section with an &. ]]>
+                <![CDATA[This is a CData section with an &. ]]>
             </test>
             <!--
                 This Comment

@@ -311,7 +311,13 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
             }
             if (!isset($attribs["standalone"])) {
                 $attribs["standalone"] = true;
-            }
+            } else {
+				if ($attribs["standalone"] === 'yes') {
+	                $attribs["standalone"] = true;
+				} else {
+	                $attribs["standalone"] = false;
+				}
+			}
             
             $struct = array(
                              "type"       => XML_BEAUTIFIER_XML_DECLARATION,
