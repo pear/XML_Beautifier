@@ -16,13 +16,13 @@ require_once 'PEAR/PackageFileManager.php';
 $version = '1.2.0';
 
 $notes = <<<EOT
-Added support for cdata sections (bug #1009)
+- Added support for cdata sections (bug #1009)
+- fixed bug #1232 (standalone attribute of XML declaration always set to "yes"
 EOT;
 
 $description = <<<EOT
-XML_Beautifier will add indentation and linebreaks to you XML files, replace all
-entities, format your comments and makes your document easier to read. You can
-influence the way your document is beautified with several options.
+XML_Beautifier will add indentation and linebreaks to you XML files, replace all entities, format your comments and makes your document easier to read.
+You can  influence the way your document is beautified with several options, ranging from indentation to changing the case of tags and normalizing your comments.
 EOT;
 
 $package = new PEAR_PackageFileManager();
