@@ -13,12 +13,13 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.1</version>
-    <date>2003-09-19</date>
+    <version>0.2</version>
+    <date>2003-10-01</date>
     <license>PHP License</license>
     <state>beta</state>
-    <notes>proposal</notes>
+    <notes>initial pear release</notes>
     <deps>
+      <dep type="pkg" rel="ge" version="0.4.1">XML_Util</dep>
       <dep type="pkg" rel="has">XML_Parser</dep>
       <dep type="php" rel="ge">4.2.0</dep>
     </deps>
@@ -28,22 +29,23 @@
     <provides type="function" name="XML_Beautifier::apiVersion" />
     <filelist>
       <file role="doc" baseinstalldir="XML" md5sum="9fc171a4136620d884337e18359daa02" name="examples/example1.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="80505583738674fee0e9e1bf1f6526bd" name="examples/example2.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="d2b9c69e61b34331c839dfafd2fd501d" name="examples/example2.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="596913e020cc87fed86ca0bafd93e690" name="examples/example3.php"/>
       <file role="doc" baseinstalldir="XML" md5sum="6485db9705dde5cae386817dbd199ddd" name="examples/example4.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="f406730cec5abd3fae629ae443c21fad" name="examples/example5.php"/>
-      <file role="doc" baseinstalldir="XML" md5sum="5b7f2bbec46d200e0c2cecdf4fcf3733" name="examples/test.xml"/>
-      <file role="doc" baseinstalldir="XML" md5sum="6d241c5dc41f4a54fe0ac1347eee72b1" name="examples/test2.xml"/>
-      <file role="php" baseinstalldir="XML" md5sum="b61ee7e135ff443fa8b75dc43cbed5c4" name="Beautifier.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="57f2ced123bf454651765c37811bd677" name="examples/example5.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="12cdbba936f6b48f43b83ea1a2884353" name="examples/example6.php"/>
+      <file role="doc" baseinstalldir="XML" md5sum="901033c50bcefb40f613ce748b31b8cd" name="examples/test.xml"/>
+      <file role="doc" baseinstalldir="XML" md5sum="451f0799f3bce1e1d7f63c1db32262e2" name="examples/test2.xml"/>
+      <file role="php" baseinstalldir="XML" md5sum="de46b78b9d8746b8b1a870bd2105491a" name="Beautifier.php"/>
     </filelist>
   </release>
   <changelog>
     <release>
-      <version>0.1</version>
-      <date>2003-09-19</date>
+      <version>0.2</version>
+      <date>2003-10-01</date>
       <license>PHP License</license>
       <state>beta</state>
-      <notes>proposal</notes>
+      <notes>initial pear release</notes>
     </release>
   </changelog>
 </package>
