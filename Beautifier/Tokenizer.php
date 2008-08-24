@@ -67,53 +67,55 @@ require_once 'XML/Parser.php';
  * @todo      tokenize DTD
  * @todo      check for xml:space attribute
  */
-class XML_Beautifier_Tokenizer extends XML_Parser {
-
-   /**
-    * current depth
-    * @var    integer
-    * @access private
-    */
+class XML_Beautifier_Tokenizer extends XML_Parser
+{
+    /**
+     * current depth
+     * @var    integer
+     * @access private
+     */
     var $_depth = 0;
 
-   /**
-    * stack for all found elements
-    * @var    array
-    * @access private
-    */
+    /**
+     * stack for all found elements
+     * @var    array
+     * @access private
+     */
     var $_struct = array();
 
-   /**
-    * current parsing mode
-    * @var    string
-    * @access private  
-    */
+    /**
+     * current parsing mode
+     * @var    string
+     * @access private  
+     */
     var $_mode = "xml";
     
-   /**
-    * indicates, whether parser is in cdata section
-    * @var    boolean
-    * @access private  
-    */
-	var $_inCDataSection = false;
-	
-   /**
-    * Tokenize a document
-    *
-    * @param    string  $document   filename or XML document
-    * @param    boolean $isFile     flag to indicate whether the first parameter is a file
-    */
-    function tokenize( $document, $isFile = true )
+    /**
+     * indicates, whether parser is in cdata section
+     * @var    boolean
+     * @access private  
+     */
+    var $_inCDataSection = false;
+
+    /**
+     * Tokenize a document
+     *
+     * @param string  $document filename or XML document
+     * @param boolean $isFile   flag to indicate whether 
+     *                          the first parameter is a file
+     *
+     * @return mixed
+     */
+    function tokenize($document, $isFile = true)
     {
         $this->folding = false;
         $this->XML_Parser();
         $this->_resetVars();
         
-        if( $isFile === true ) {
+        if ($isFile === true) {
             $this->setInputFile($document);
             $result = $this->parse();
-        }
-        else {
+        } else {
             $result = $this->parseString($document);
         }
         
@@ -127,33 +129,35 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     /**
      * Start element handler for XML parser
      *
-     * @access protected
-     * @param  object $parser  XML parser object
-     * @param  string $element XML element
-     * @param  array  $attribs attributes of XML tag
+     * @param object $parser  XML parser object
+     * @param string $element XML element
+     * @param array  $attribs attributes of XML tag
+     *
      * @return void
+     * @access protected
      */
     function startHandler($parser, $element, $attribs)
     {
         $struct = array(
-                         "type"     => XML_BEAUTIFIER_ELEMENT,
-                         "tagname"  => $element,
-                         "attribs"  => $attribs,
-                         "contains" => XML_BEAUTIFIER_EMPTY,
-                         "depth"    => $this->_depth++,
-                         "children" => array()
-                      );
+            "type"     => XML_BEAUTIFIER_ELEMENT,
+            "tagname"  => $element,
+            "attribs"  => $attribs,
+            "contains" => XML_BEAUTIFIER_EMPTY,
+            "depth"    => $this->_depth++,
+            "children" => array()
+        );
 
-        array_push($this->_struct,$struct);
+        array_push($this->_struct, $struct);
     }
 
     /**
      * End element handler for XML parser
      *
-     * @access protected
-     * @param  object XML parser object
-     * @param  string
+     * @param object $parser  XML parser object
+     * @param string $element element
+     *
      * @return void
+     * @access protected
      */
     function endHandler($parser, $element)
     {
@@ -172,10 +176,11 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     /**
      * Handler for character data
      *
-     * @access protected
-     * @param  object XML parser object
-     * @param  string CDATA
+     * @param object $parser XML parser object
+     * @param string $cdata  CDATA
+     *
      * @return void
+     * @access protected
      */
     function cdataHandler($parser, $cdata)
     {
@@ -183,17 +188,17 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
             return true;
         }
 
-		if ($this->_inCDataSection === true) {
-			$type = XML_BEAUTIFIER_CDATA_SECTION;
-		} else {
-			$type = XML_BEAUTIFIER_CDATA;
-		}
-		
+        if ($this->_inCDataSection === true) {
+            $type = XML_BEAUTIFIER_CDATA_SECTION;
+        } else {
+            $type = XML_BEAUTIFIER_CDATA;
+        }
+
         $struct = array(
-                         "type"  => $type,
-                         "data"  => $cdata,
-                         "depth" => $this->_depth
-                       );
+            "type"  => $type,
+            "data"  => $cdata,
+            "depth" => $this->_depth
+        );
 
         $this->_appendToParent($struct);
     }
@@ -201,20 +206,21 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     /**
      * Handler for processing instructions
      *
-     * @access protected
-     * @param  object XML parser object
-     * @param  string target
-     * @param  string data
+     * @param object $parser XML parser object
+     * @param string $target target
+     * @param string $data   data
+     *
      * @return void
+     * @access protected
      */
     function piHandler($parser, $target, $data)
     {
         $struct = array(
-                         "type"    => XML_BEAUTIFIER_PI,
-                         "target"  => $target,
-                         "data"    => $data,
-                         "depth"   => $this->_depth
-                       );
+            "type"    => XML_BEAUTIFIER_PI,
+            "target"  => $target,
+            "data"    => $data,
+            "depth"   => $this->_depth
+        );
 
         $this->_appendToParent($struct);
     }
@@ -222,19 +228,24 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     /**
      * Handler for external entities
      *
+     * @param object $parser            XML parser object
+     * @param string $open_entity_names entity name
+     * @param string $base              ?? (unused?)
+     * @param string $system_id         ?? (unused?)
+     * @param string $public_id         ?? (unused?)
+     *
+     * @return bool
      * @access protected
-     * @param  object XML parser object
-     * @param  string target
-     * @param  string data
-     * @return void
+     * @todo revisit parameter signature... doesn't seem to be correct
+     * @todo PEAR CS - need to shorten arg list for 85-char rule
      */
     function entityrefHandler($parser, $open_entity_names, $base, $system_id, $public_id)
     {
         $struct = array(
-                         "type"    => XML_BEAUTIFIER_ENTITY,
-                         "name"    => $open_entity_names,
-                         "depth"   => $this->_depth
-                       );
+            "type"    => XML_BEAUTIFIER_ENTITY,
+            "name"    => $open_entity_names,
+            "depth"   => $this->_depth
+        );
 
         $this->_appendToParent($struct);
         return true;
@@ -243,30 +254,33 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
     /**
      * Handler for all other stuff
      *
-     * @access protected
-     * @param  object XML parser object
-     * @param  string data
+     * @param object $parser XML parser object
+     * @param string $data   data
+     *
      * @return void
+     * @access protected
      */
     function defaultHandler($parser, $data)
     {
         switch ($this->_mode) {
-            case "xml":
-                $this->_handleXMLDefault($data);
-                break;
-            case "doctype":
-                $this->_handleDoctype($data);
-                break;
+        case "xml":
+            $this->_handleXMLDefault($data);
+            break;
+        case "doctype":
+            $this->_handleDoctype($data);
+            break;
         }
     }
 
-   /**
-    * handler for all data inside the doctype declaration
-    *
-    * @access private
-    * @param  string    data
-    * @todo   improve doctype parsing to split the declaration into seperate tokens
-    */
+    /**
+     * handler for all data inside the doctype declaration
+     *
+     * @param string $data data
+     *
+     * @return void
+     * @access private
+     * @todo improve doctype parsing to split the declaration into seperate tokens
+     */
     function _handleDoctype($data)
     {
         if (eregi(">", $data)) {
@@ -277,53 +291,58 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
         }
 
         $struct = array(
-                         "type"    => XML_BEAUTIFIER_DT_DECLARATION,
-                         "data"    => $data,
-                         "depth"   => $this->_depth
-                       );
+            "type"    => XML_BEAUTIFIER_DT_DECLARATION,
+            "data"    => $data,
+            "depth"   => $this->_depth
+        );
         $this->_appendToParent($struct);
     }
     
-   /**
-    * handler for all default XML data
-    *
-    * @access private
-    * @param  string    data
-    */    
+    /**
+     * handler for all default XML data
+     *
+     * @param string $data data
+     *
+     * @return bool
+     * @access private
+     */    
     function _handleXMLDefault($data)
     {
-        /*
-        * handle comment
-        */
         if (strncmp("<!--", $data, 4) == 0) {
-        
+
+            /*
+             * handle comment
+             */
             $regs = array();
             eregi("<!--(.+)-->", $data, $regs);
             $comment = trim($regs[1]);
             
             $struct = array(
-                             "type"    => XML_BEAUTIFIER_COMMENT,
-                             "data"    => $comment,
-                             "depth"   => $this->_depth
-                           );
-        /*
-        * handle start of cdata section
-        */
+                "type"    => XML_BEAUTIFIER_COMMENT,
+                "data"    => $comment,
+                "depth"   => $this->_depth
+            );
+
         } elseif ($data == "<![CDATA[") {
-			$this->_inCDataSection = true;
-			$struct = null;
-        /*
-        * handle end of cdata section
-        */
+            /*
+             * handle start of cdata section
+             */
+            $this->_inCDataSection = true;
+            $struct                = null;
+
         } elseif ($data == "]]>") {
-			$this->_inCDataSection = false;
-			$struct = null;
-        /*
-        * handle XML declaration
-        */
+            /*
+             * handle end of cdata section
+             */
+            $this->_inCDataSection = false;
+            $struct                = null;
+
         } elseif (strncmp("<?", $data, 2) == 0) {
+            /*
+             * handle XML declaration
+             */
             preg_match_all('/([a-zA-Z_]+)="((?:\\\.|[^"\\\])*)"/', $data, $match);
-            $cnt = count($match[1]);
+            $cnt     = count($match[1]);
             $attribs = array();
             for ($i = 0; $i < $cnt; $i++) {
                 $attribs[$match[1][$i]] = $match[2][$i];
@@ -338,49 +357,53 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
             if (!isset($attribs["standalone"])) {
                 $attribs["standalone"] = true;
             } else {
-				if ($attribs["standalone"] === 'yes') {
-	                $attribs["standalone"] = true;
-				} else {
-	                $attribs["standalone"] = false;
-				}
-			}
+                if ($attribs["standalone"] === 'yes') {
+                    $attribs["standalone"] = true;
+                } else {
+                    $attribs["standalone"] = false;
+                }
+            }
             
             $struct = array(
-                             "type"       => XML_BEAUTIFIER_XML_DECLARATION,
-                             "version"    => $attribs["version"],
-                             "encoding"   => $attribs["encoding"],
-                             "standalone" => $attribs["standalone"],
-                             "depth"      => $this->_depth
-                           );
+                "type"       => XML_BEAUTIFIER_XML_DECLARATION,
+                "version"    => $attribs["version"],
+                "encoding"   => $attribs["encoding"],
+                "standalone" => $attribs["standalone"],
+                "depth"      => $this->_depth
+            );
+
         } elseif (eregi("^<!DOCTYPE", $data)) {
             $this->_mode = "doctype";
-            $struct = array(
-                             "type"    => XML_BEAUTIFIER_DT_DECLARATION,
-                             "data"    => $data,
-                             "depth"   => $this->_depth
-                           );
+            $struct      = array(
+                "type"    => XML_BEAUTIFIER_DT_DECLARATION,
+                "data"    => $data,
+                "depth"   => $this->_depth
+            );
+
         } else {
-        /*
-        * handle all other data
-        */
+            /*
+             * handle all other data
+             */
             $struct = array(
-                             "type"    => XML_BEAUTIFIER_DEFAULT,
-                             "data"    => $data,
-                             "depth"   => $this->_depth
-                           );
+                "type"    => XML_BEAUTIFIER_DEFAULT,
+                "data"    => $data,
+                "depth"   => $this->_depth
+            );
         }
         
-		if (!is_null($struct)) {
-	        $this->_appendToParent($struct);
-		}
+        if (!is_null($struct)) {
+            $this->_appendToParent($struct);
+        }
         return true;
     }
     
     /**
      * append a struct to the last struct on the stack
      *
+     * @param array $struct structure to append
+     *
+     * @return bool
      * @access private
-     * @param  array    $struct structure to append
      */
     function _appendToParent($struct)
     {
@@ -394,12 +417,12 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
         array_push($this->_struct, $struct);
     }
 
-   /**
-    * get the last token
-    *
-    * @access   private
-    * @return   array
-    */
+    /**
+     * get the last token
+     *
+     * @access   private
+     * @return   array
+     */
     function _getLastToken()
     {
         $parent = array_pop($this->_struct);
@@ -414,19 +437,20 @@ class XML_Beautifier_Tokenizer extends XML_Parser {
         return $last;
     }
     
-   /**
-    * reset all used object properties
-    *
-    * This method is called before parsing a new document
-    *
-    * @access private
-    */
+    /**
+     * reset all used object properties
+     *
+     * This method is called before parsing a new document
+     *
+     * @return void
+     * @access private
+     */
     function _resetVars()
     {
-        $this->_depth  = 0;
-        $this->_struct = array();
-        $this->_mode   = "xml";
-		$this->_inCDataSection = false;
+        $this->_depth          = 0;
+        $this->_struct         = array();
+        $this->_mode           = "xml";
+        $this->_inCDataSection = false;
     }
 }
 ?>

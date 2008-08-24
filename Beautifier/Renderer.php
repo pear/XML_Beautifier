@@ -57,80 +57,88 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/XML_Beautifier
  */
-class XML_Beautifier_Renderer {
-
-   /**
-    * options
-    * @var array
-    */
+class XML_Beautifier_Renderer
+{
+    /**
+     * options
+     * @var array
+     */
     var $_options = array();
 
-   /**
-    * create a new renderer
-    *
-    * @access   public
-    * @param    array   options for the serialization
-    */
+    /**
+     * create a new renderer
+     *
+     * @param array $options for the serialization
+     *
+     * @access   public
+     */
     function XML_Beautifier_Renderer($options = array())
     {
         $this->_options = $options;
     }
     
-   /**
-    * Serialize the XML tokens
-    *
-    * @access   public
-    * @param    array   XML tokens
-    * @return   string  XML document
-    * @abstract
-    */
+    /**
+     * Serialize the XML tokens
+     *
+     * @param array $tokens XML tokens
+     *
+     * @return string XML document
+     * @access public
+     * @abstract
+     */
     function serialize($tokens)
     {
         return  '';
     }
 
-   /**
-    * normalize the XML tree
-    *
-    * When normalizing an XML tree, adjacent data sections
-    * are combined to one data section.
-    *
-    * @access  public
-    * @param   array       XML tree as returned by the tokenizer
-    * @return  array       XML tree
-    */
+    /**
+     * normalize the XML tree
+     *
+     * When normalizing an XML tree, adjacent data sections
+     * are combined to one data section.
+     *
+     * @param array $tokens XML tree as returned by the tokenizer
+     *
+     * @return array XML tree
+     * @access public
+     */
     function normalize($tokens)
     {
-        $tmp    =   array();
+        $tmp = array();
         foreach ($tokens as $token) {
             array_push($tmp, $this->_normalizeToken($token));
         }
         return $tmp;
     }
 
-   /**
-    * normalize one element in the XML tree
-    *
-    * This method will combine all data sections of an element.
-    *
-    * @access   private
-    * @param    array   $struct
-    * @return   array   $struct
-    */
+    /**
+     * normalize one element in the XML tree
+     *
+     * This method will combine all data sections of an element.
+     *
+     * @param array $token token array
+     *
+     * @return array $struct
+     * @access private
+     */
     function _normalizeToken($token)
     {
-        if ((isset($token["children"])) && !is_array($token["children"]) || empty($token["children"])) {
+        if ((isset($token["children"])) 
+            && !is_array($token["children"]) 
+            || empty($token["children"])
+        ) {
             return $token;
         }
 
-        $children = $token["children"];
+        $children          = $token["children"];
         $token["children"] = array();
-        $cnt = count($children);
-        $currentMode = 0;
-        for ($i = 0; $i < $cnt; $i++ )
-        {
+        $cnt               = count($children);
+        $currentMode       = 0;
+        for ($i = 0; $i < $cnt; $i++ ) {
             // no data section
-            if ($children[$i]["type"] != XML_BEAUTIFIER_CDATA && $children[$i]["type"] != XML_BEAUTIFIER_CDATA_SECTION) {
+            if ($children[$i]["type"] != XML_BEAUTIFIER_CDATA 
+                && $children[$i]["type"] != XML_BEAUTIFIER_CDATA_SECTION
+            ) {
                 $children[$i] = $this->_normalizeToken($children[$i]);
 
                 $currentMode = 0;
@@ -138,13 +146,12 @@ class XML_Beautifier_Renderer {
                 continue;
             }
 
-            /**
-            * remove whitespace
-            */
-            if( $this->_options['removeLineBreaks'] == true )
-            {
+            /*
+             * remove whitespace
+             */
+            if ($this->_options['removeLineBreaks'] == true) {
                 $children[$i]['data'] = trim($children[$i]['data']);
-                if( $children[$i]['data'] == '' ) {
+                if ($children[$i]['data'] == '') {
                     continue;
                 }
             }
@@ -152,8 +159,10 @@ class XML_Beautifier_Renderer {
             if ($currentMode == $children[$i]["type"]) {
                 $tmp = array_pop($token["children"]);
 
-                if( $children[$i]['data'] != '' ) {
-                    if( $tmp['data'] != '' && $this->_options['removeLineBreaks'] == true ) {
+                if ($children[$i]['data'] != '') {
+                    if ($tmp['data'] != '' 
+                        && $this->_options['removeLineBreaks'] == true
+                    ) {
                         $tmp['data'] .= ' ';
                     }
                     $tmp["data"] .= $children[$i]["data"];
@@ -168,41 +177,44 @@ class XML_Beautifier_Renderer {
         return $token;
     }
 
-   /**
-    * indent a text block consisting of several lines
-    *
-    * @access private
-    * @param  string    $text   textblock
-    * @param  integer   $depth  depth to indent
-    * @param  boolean   $trim   trim the lines
-    * @return string            indented text block
-    */
+    /**
+     * indent a text block consisting of several lines
+     *
+     * @param string  $text  textblock
+     * @param integer $depth depth to indent
+     * @param boolean $trim  trim the lines
+     *
+     * @return string indented text block
+     * @access private
+     */
     function _indentTextBlock($text, $depth, $trim = false)
     {
         $indent = $this->_getIndentString($depth);
-        $tmp = explode("\n", $text);
-        $cnt = count($tmp);
-		$xml = '';
+        $tmp    = explode("\n", $text);
+        $cnt    = count($tmp);
+        $xml    = '';
         for ($i = 0; $i < $cnt; $i++ ) {
             if ($trim) {
                 $tmp[$i] = trim($tmp[$i]);
             }
-            if( $tmp[$i] == '' )
+            if ($tmp[$i] == '') {
                 continue;
+            }
             $xml .= $indent.$tmp[$i].$this->_options["linebreak"];
         }
         return $xml;
     }
     
-   /**
-    * get the string that is used for indentation in a specific depth
-    *
-    * This depends on the option 'indent'.
-    *
-    * @access private
-    * @param  integer   $depth  nesting level
-    * @return string            indent string
-    */
+    /**
+     * get the string that is used for indentation in a specific depth
+     *
+     * This depends on the option 'indent'.
+     *
+     * @param integer $depth nesting level
+     *
+     * @return string indent string
+     * @access private
+     */
     function _getIndentString($depth)
     {
         if ($depth > 0) {

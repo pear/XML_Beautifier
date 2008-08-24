@@ -50,8 +50,8 @@
 /**
  * define include path constant
  */
-if( !defined( 'XML_BEAUTIFIER_INCLUDE_PATH' ) ) {
-    define( 'XML_BEAUTIFIER_INCLUDE_PATH', 'XML/Beautifier' );
+if (!defined('XML_BEAUTIFIER_INCLUDE_PATH')) {
+    define('XML_BEAUTIFIER_INCLUDE_PATH', 'XML/Beautifier');
 }
 
 /**
@@ -160,96 +160,114 @@ define('XML_BEAUTIFIER_ERROR_UNKNOWN_RENDERER', 152);
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/XML_Beautifier
  */
-class XML_Beautifier {
+class XML_Beautifier
+{
+    /**
+     * default options for the output format
+     * @var    array
+     * @access private
+     */
+     var $_defaultOptions = array(
+         "removeLineBreaks"   => true,
+         "removeLeadingSpace" => true,       // not implemented, yet
+         "indent"             => "    ",
+         "linebreak"          => "\n",
+         "caseFolding"        => false,
+         "caseFoldingTo"      => "uppercase",
+         "normalizeComments"  => false,
+         "maxCommentLine"     => -1,
+         "multilineTags"      => false
+      );
 
-   /**
-    * default options for the output format
-    * @var    array
-    * @access private
-    */
-    var $_defaultOptions = array(
-                         "removeLineBreaks"  => true,
-                         "removeLeadingSpace"=> true,       // not implemented, yet
-                         "indent"            => "    ",
-                         "linebreak"         => "\n",
-                         "caseFolding"       => false,
-                         "caseFoldingTo"     => "uppercase",
-                         "normalizeComments" => false,
-                         "maxCommentLine"    => -1,
-                         "multilineTags"     => false
-                        );
-
-   /**
-    * options for the output format
-    * @var    array
-    * @access private
-    */
-    var $_options = array();
+    /**
+     * options for the output format
+     * @var    array
+     * @access private
+     */
+     var $_options = array();
     
-   /**
-    * Constructor
-    *
-    * This is only used to specify the options of the
-    * beautifying process.
-    *
-    * @access public
-    * @param  array  $options   options that override default options
-    */   
+    /**
+     * Constructor
+     *
+     * This is only used to specify the options of the
+     * beautifying process.
+     *
+     * @param array $options options that override default options
+     *
+     * @access public
+     */   
     function XML_Beautifier($options = array())
     {
         $this->_options = array_merge($this->_defaultOptions, $options);
-        $this->folding = false;
+        $this->folding  = false;
     }
 
-   /**
-    * reset all options to default options
-    *
-    * @access   public
-    * @see      setOption(), XML_Beautifier(), setOptions()
-    */
+    /**
+     * reset all options to default options
+     *
+     * @return void
+     * @access public
+     * @see setOption(), XML_Beautifier(), setOptions()
+     */
     function resetOptions()
     {
         $this->_options = $this->_defaultOptions;
     }
 
-   /**
-    * set an option
-    *
-    * You can use this method if you do not want to set all options in the constructor
-    *
-    * @access   public
-    * @see      resetOptions(), XML_Beautifier(), setOptions()
-    */
+    /**
+     * set an option
+     *
+     * You can use this method if you do not want 
+     * to set all options in the constructor
+     *
+     * @param string $name  option name
+     * @param mixed  $value option value
+     *
+     * @return void
+     * @access public
+     * @see resetOptions(), XML_Beautifier(), setOptions()
+     */
     function setOption($name, $value)
     {
         $this->_options[$name] = $value;
     }
     
-   /**
-    * set several options at once
-    *
-    * You can use this method if you do not want to set all options in the constructor
-    *
-    * @access   public
-    * @see      resetOptions(), XML_Beautifier()
-    */
+    /**
+     * set several options at once
+     *
+     * You can use this method if you do not want 
+     * to set all options in the constructor
+     *
+     * @param array $options an options array
+     *
+     * @return void
+     * @access   public
+     * @see      resetOptions(), XML_Beautifier()
+     */
     function setOptions($options)
     {
         $this->_options = array_merge($this->_options, $options);
     }
 
-   /**
-    * format a file or URL
-    *
-    * @access public
-    * @param  string    $file       filename
-    * @param  mixed     $newFile    filename for beautified XML file (if none is given, the XML string will be returned.)
-    *                               if you want overwrite the original file, use XML_BEAUTIFIER_OVERWRITE
-    * @param  string    $renderer   Renderer to use, default is the plain xml renderer
-    * @return mixed                 XML string of no file should be written, true if file could be written
-    * @throws PEAR_Error
-    * @uses   _loadRenderer() to load the desired renderer
-    */   
+    /**
+     * format a file or URL
+     *
+     * @param string $file     filename
+     * @param mixed  $newFile  filename for beautified XML file 
+     *                         (if none is given, the XML string 
+     *                         will be returned).
+     *                         if you want overwrite the original file, 
+     *                         use XML_BEAUTIFIER_OVERWRITE
+     * @param string $renderer Renderer to use, 
+     *                         default is the plain xml renderer
+     *
+     * @return mixed XML string of no file should be written, 
+     *               true if file could be written
+     * @access public
+     * @throws PEAR_Error
+     * @uses _loadRenderer() to load the desired renderer
+     * @todo PEAR CS - should require_once be include_once?
+     */   
     function formatFile($file, $newFile = null, $renderer = "Plain")
     {
         if ($newFile == XML_BEAUTIFIER_OVERWRITE) {
@@ -263,7 +281,7 @@ class XML_Beautifier {
         require_once XML_BEAUTIFIER_INCLUDE_PATH . '/Tokenizer.php';
         $tokenizer = new XML_Beautifier_Tokenizer();
         
-        $tokens = $tokenizer->tokenize( $file, true );
+        $tokens = $tokenizer->tokenize($file, true);
 
         if (PEAR::isError($tokens)) {
             return $tokens;
@@ -283,7 +301,8 @@ class XML_Beautifier {
         
         $fp = @fopen($newFile, "w");
         if (!$fp) {
-            return PEAR::raiseError("Could not write to output file", XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE);
+            return PEAR::raiseError("Could not write to output file", 
+                XML_BEAUTIFIER_ERROR_NO_OUTPUT_FILE);
         }
         
         flock($fp, LOCK_EX);
@@ -293,14 +312,17 @@ class XML_Beautifier {
         return true;
     }
 
-   /**
-    * format an XML string
-    *
-    * @access public
-    * @param  string    $string     XML
-    * @return string    formatted XML string
-    * @throws PEAR_Error
-    */   
+    /**
+     * format an XML string
+     *
+     * @param string $string   XML
+     * @param string $renderer the renderer type
+     *
+     * @return string formatted XML string
+     * @access public
+     * @throws PEAR_Error
+     * @todo PEAR CS - should require_once be include_once?
+     */   
     function formatString($string, $renderer = "Plain")
     {
         /**
@@ -310,7 +332,7 @@ class XML_Beautifier {
         require_once XML_BEAUTIFIER_INCLUDE_PATH . '/Tokenizer.php';
         $tokenizer = new XML_Beautifier_Tokenizer();
         
-        $tokens = $tokenizer->tokenize( $string, false );
+        $tokens = $tokenizer->tokenize($string, false);
 
         if (PEAR::isError($tokens)) {
             return $tokens;
@@ -327,28 +349,32 @@ class XML_Beautifier {
         return $xml;
     }
 
-   /**
-    * load a renderer
-    *
-    * Renderers are used to serialize the XML tokens back 
-    * to an XML string.
-    *
-    * Renderers are located in the XML/Beautifier/Renderer directory.
-    *
-    * @access   private
-    * @param    string  $renderer   name of the renderer
-    * @param    array   $options    options for the renderer
-    * @return   object              renderer
-    * @throws   PEAR_Error
-    */
+    /**
+     * load a renderer
+     *
+     * Renderers are used to serialize the XML tokens back 
+     * to an XML string.
+     *
+     * Renderers are located in the XML/Beautifier/Renderer directory.
+     *
+     * NOTE:  the "@" error suppression is used in this method
+     *
+     * @param string $name    name of the renderer
+     * @param array  $options options for the renderer
+     *
+     * @return object renderer
+     * @access private
+     * @throws PEAR_Error
+     */
     function &_loadRenderer($name, $options = array())
     {
-        $file = XML_BEAUTIFIER_INCLUDE_PATH . "/Renderer/$name.php";
+        $file  = XML_BEAUTIFIER_INCLUDE_PATH . "/Renderer/$name.php";
         $class = "XML_Beautifier_Renderer_$name";
 
         @include_once $file;
         if (!class_exists($class)) {
-            return PEAR::raiseError( "Could not load renderer.", XML_BEAUTIFIER_ERROR_UNKNOWN_RENDERER );
+            return PEAR::raiseError("Could not load renderer.", 
+                XML_BEAUTIFIER_ERROR_UNKNOWN_RENDERER);
         }
 
         $renderer = &new $class($options);
@@ -356,13 +382,13 @@ class XML_Beautifier {
         return $renderer;        
     }
     
-   /**
-    * return API version
-    *
-    * @access   public
-    * @static
-    * @return   string  $version API version
-    */
+    /**
+     * return API version
+     *
+     * @access   public
+     * @static
+     * @return   string  $version API version
+     */
     function apiVersion()
     {
         return "1.0";
