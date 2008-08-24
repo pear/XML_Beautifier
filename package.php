@@ -1,23 +1,16 @@
 <?php
-/**
- * script to automate the generation of the
- * package.xml file.
- *
- * @author      Stephan Schmidt <schst@php-tools.net>
- * @package     XML_Beautifier
- * @subpackage  Tools
- */
 
-/**
- * uses PackageFileManager
- */ 
 require_once 'PEAR/PackageFileManager.php';
 
-$version = '1.2.0';
+$version = '1.2.0a1';
+$state   = 'alpha';
 
 $notes = <<<EOT
-- Added support for cdata sections (bug #1009)
-- fixed bug #1232 (standalone attribute of XML declaration always set to "yes"
+- switched to BSD License
+- switch to package.xml v2
+- PEAR CS cleanup
+- Fixed Bug #1009:  Data in <![CDATA[ ... ]]> [schst]
+- Fixed Bug #1232:  The standalone attributes turned to 'on' [schst]
 EOT;
 
 $description = <<<EOT
@@ -32,24 +25,23 @@ $result = $package->setOptions(array(
     'summary'           => 'Class to format XML documents.',
     'description'       => $description,
     'version'           => $version,
-    'state'             => 'stable',
-    'license'           => 'PHP License',
+    'state'             => $state,
+    'license'           => 'BSD License',
     'filelistgenerator' => 'cvs',
-    'ignore'            => array('package.php', 'package.xml'),
+    'ignore'            => array('package.php', 'package.xml', 'package2.php', 'package2.xml'),
     'notes'             => $notes,
     'simpleoutput'      => true,
     'baseinstalldir'    => 'XML',
     'packagedirectory'  => './',
-    'dir_roles'         => array('docs' => 'doc',
-                                 'examples' => 'doc',
-                                 'tests' => 'test',
-                                 )
+    'dir_roles'         => array('examples' => 'doc')
     ));
 
+/**
 if (PEAR::isError($result)) {
     echo $result->getMessage();
     die();
 }
+**/
 
 $package->addMaintainer('schst', 'lead', 'Stephan Schmidt', 'schst@php-tools.net');
 
