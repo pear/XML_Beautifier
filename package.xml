@@ -21,10 +21,10 @@ You can  influence the way your document is beautified with several options, ran
   </maintainer>
   </maintainers>
  <release>
-  <version>1.2.0a1</version>
-  <date>2008-08-24</date>
+  <version>1.2.0RC1</version>
+  <date>2008-09-15</date>
   <license>BSD License</license>
-  <state>alpha</state>
+  <state>beta</state>
   <notes>- switched to BSD License
 - switch to package.xml v2
 - PEAR CS cleanup
@@ -131,6 +131,18 @@ moved data trim() to renderer
     <date>2008-08-24</date>
     <license>BSD License</license>
     <state>alpha</state>
+    <notes>- switched to BSD License
+- switch to package.xml v2
+- PEAR CS cleanup
+- Fixed Bug #1009:  Data in &lt;![CDATA[ ... ]]&gt; [schst]
+- Fixed Bug #1232:  The standalone attributes turned to &apos;on&apos; [schst]
+    </notes>
+   </release>
+   <release>
+    <version>1.2.0RC1</version>
+    <date>2008-09-15</date>
+    <license>BSD License</license>
+    <state>beta</state>
     <notes>- switched to BSD License
 - switch to package.xml v2
 - PEAR CS cleanup

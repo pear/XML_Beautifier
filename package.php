@@ -2,8 +2,8 @@
 
 require_once 'PEAR/PackageFileManager.php';
 
-$version = '1.2.0a1';
-$state   = 'alpha';
+$version = '1.2.0RC1';
+$state   = 'beta';
 
 $notes = <<<EOT
 - switched to BSD License
@@ -44,6 +44,7 @@ if (PEAR::isError($result)) {
 **/
 
 $package->addMaintainer('schst', 'lead', 'Stephan Schmidt', 'schst@php-tools.net');
+$package->addMaintainer('ashnazg', 'lead', 'Chuck Burgess', 'ashnazg@php.net');
 
 $package->addDependency('XML_Parser', '', 'has', 'pkg', false);
 $package->addDependency('XML_Util', '0.5', 'ge', 'pkg', false);
