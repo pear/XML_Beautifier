@@ -8,9 +8,9 @@ XML_Beautifier will add indentation and linebreaks to you XML files, replace all
 You can  influence the way your document is beautified with several options, ranging from indentation to changing the case of tags and normalizing your comments.
 EOT;
 
-$version = '1.2.0RC1';
+$version = '1.2.0';
 $apiver  = '1.2.0';
-$state   = 'beta';
+$state   = 'stable';
 
 $notes = <<<EOT
 - switched to BSD License

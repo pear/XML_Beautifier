@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0" packagerversion="1.7.2">
+<package version="1.0" packagerversion="1.8.0alpha1">
  <name>XML_Beautifier</name>
  <summary>Class to format XML documents.</summary>
  <description>XML_Beautifier will add indentation and linebreaks to you XML files, replace all entities, format your comments and makes your document easier to read.
@@ -21,10 +21,10 @@ You can  influence the way your document is beautified with several options, ran
   </maintainer>
   </maintainers>
  <release>
-  <version>1.2.0RC1</version>
-  <date>2008-09-15</date>
+  <version>1.2.0</version>
+  <date>2008-09-19</date>
   <license>BSD License</license>
-  <state>beta</state>
+  <state>stable</state>
   <notes>- switched to BSD License
 - switch to package.xml v2
 - PEAR CS cleanup
@@ -143,6 +143,18 @@ moved data trim() to renderer
     <date>2008-09-15</date>
     <license>BSD License</license>
     <state>beta</state>
+    <notes>- switched to BSD License
+- switch to package.xml v2
+- PEAR CS cleanup
+- Fixed Bug #1009:  Data in &lt;![CDATA[ ... ]]&gt; [schst]
+- Fixed Bug #1232:  The standalone attributes turned to &apos;on&apos; [schst]
+    </notes>
+   </release>
+   <release>
+    <version>1.2.0</version>
+    <date>2008-09-19</date>
+    <license>BSD License</license>
+    <state>stable</state>
     <notes>- switched to BSD License
 - switch to package.xml v2
 - PEAR CS cleanup
