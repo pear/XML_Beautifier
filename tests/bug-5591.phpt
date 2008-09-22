@@ -4,17 +4,22 @@ XML Beautifier - Bug #5591: Undefined variable notice when parsing DOCTYPE
 <?php
 /*
  * The bug report complains of a Notice being printed,
- * but I cannot duplicate it here.  Instead, this test case
- * fails because the XML and DOCTYPE tags are not being
- * included in the output.  That problem is already
- * reported in Bug #5450.  This test case should begin
- * passing after #5450 is fixed.
+ * but I cannot duplicate it here.  
+ *
+ * Note that this test case fails on PHP5 because 
+ * the XML and DOCTYPE tags are not being included in 
+ * the output.  That problem is already reported in 
+ * Bug #5450.  This test case should begin passing 
+ * after #5450 is fixed.
+ *
+ * Note also that I'm not sure if the 5-char indention
+ * of the DOCTYPE attributes is correct behavior.
  */
 
 error_reporting(E_ALL);
 require_once 'XML/Beautifier.php';
 
-/**
+/*
  * XML is from http://www.samalyse.com/ln/0015.php
  */
 $xml = <<<EOF
@@ -48,8 +53,10 @@ $fmt = new XML_Beautifier();
 echo $fmt->formatString($xml);
 ?>
 --EXPECT--
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="fr" xml:lang="fr" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
