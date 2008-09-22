@@ -4,10 +4,12 @@ XML Beautifier - Bug #2144: High-UTF entities in attributed decoded as ?
 <?php
 /*
  * The bug report complains of entities being changed to '?" marks,
- * but I cannot duplicate it here.  Instead, this test case
- * fails because the XML tag is not being included in the output.  
- * That problem is already reported in Bug #5450.  This test case 
- * should begin passing after #5450 is fixed.
+ * which I see happening on PHP 4.4.9 but not on PHP 5.2.4.  
+ *
+ * Note that this test case fails on PHP5 because the XML tag 
+ * is not being included in the output.  That problem is 
+ * already reported in Bug #5450.  This test case 
+ * should begin passing on PHP5 after #5450 is fixed.
  */
 
 require_once 'XML/Beautifier.php';
@@ -22,9 +24,10 @@ EOF;
 
 $bf = new XML_Beautifier();
 echo $bf->formatString( $xml);
+
 ?>
 --EXPECT--
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bogustag attribute="Инновационный дайджест">
     <content />
 </bogustag>
