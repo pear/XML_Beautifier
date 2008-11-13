@@ -3,7 +3,6 @@ XML Beautifier - Bug #1884:  Parser is changing &#246; to
 --FILE--
 <?php
 require_once 'XML/Beautifier.php';
-$xml='XML/Beautifier.php';
 
 $string = '<?xml version="1.0" encoding="ISO-8859-1"?><objekttitel>sch&#246;n</objekttitel>';
 
