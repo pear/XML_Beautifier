@@ -283,7 +283,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser
      */
     function _handleDoctype($data)
     {
-        if (eregi(">", $data)) {
+        if (preg_match("/>/i", $data)) {
             $last = $this->_getLastToken();
             if ($last["data"] == "]" ) {
                 $this->_mode = "xml";
@@ -314,7 +314,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser
              * handle comment
              */
             $regs = array();
-            eregi("<!--(.+)-->", $data, $regs);
+            preg_match("/<!--(.+)-->/i", $data, $regs);
             $comment = trim($regs[1]);
             
             $struct = array(
@@ -372,7 +372,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser
                 "depth"      => $this->_depth
             );
 
-        } elseif (eregi("^<!DOCTYPE", $data)) {
+        } elseif (preg_match("/^<!DOCTYPE/i", $data)) {
             $this->_mode = "doctype";
             $struct      = array(
                 "type"    => XML_BEAUTIFIER_DT_DECLARATION,
