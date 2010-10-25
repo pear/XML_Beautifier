@@ -17,10 +17,10 @@ You can  influence the way your document is beautified with several options, ran
   <email>ashnazg@php.net</email>
   <active>yes</active>
  </lead>
- <date>2010-10-25</date>
- <time>23:30:39</time>
+ <date>2010-10-26</date>
+ <time>00:53:35</time>
  <version>
-  <release>1.2.1</release>
+  <release>1.2.2</release>
   <api>1.2.0</api>
  </version>
  <stability>
@@ -29,8 +29,7 @@ You can  influence the way your document is beautified with several options, ran
  </stability>
  <license uri="http://opensource.org/licenses/bsd-license">BSD License</license>
  <notes>
-Automatically built QA release
-Bug #17764 Patch: Using PCRE instead of ereg/eregi - olleolleolle
+Remove package.php from release
  </notes>
  <contents>
   <dir baseinstalldir="XML" name="/">
@@ -52,8 +51,6 @@ Bug #17764 Patch: Using PCRE instead of ereg/eregi - olleolleolle
    <file baseinstalldir="XML" md5sum="113fcad6d86b1ece1e735e67dee0438e" name="tests/bug-5450.phpt" role="test" />
    <file baseinstalldir="XML" md5sum="59077b130b60c82272257ba9cc5c5229" name="tests/bug-5591.phpt" role="test" />
    <file baseinstalldir="XML" md5sum="027ce3198512effd7b7825ae5c9c8f41" name="Beautifier.php" role="php" />
-   <file baseinstalldir="XML" md5sum="a757ef6514ce4333fb4594d7efdc4f7a" name="package.php" role="php" />
-   <file baseinstalldir="XML" md5sum="50c7ba419b04860eb85ba4f106e9d44e" name="package2.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -262,6 +259,21 @@ moved data trim() to renderer
    <notes>
 Automatically built QA release
 Bug #17764 Patch: Using PCRE instead of ereg/eregi - olleolleolle
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.2.2</release>
+    <api>1.2.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-26</date>
+   <license uri="http://opensource.org/licenses/bsd-license">BSD License</license>
+   <notes>
+Remove package.php from release
    </notes>
   </release>
  </changelog>
