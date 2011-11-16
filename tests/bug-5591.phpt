@@ -16,7 +16,6 @@ XML Beautifier - Bug #5591: Undefined variable notice when parsing DOCTYPE
  * of the DOCTYPE attributes is correct behavior.
  */
 
-error_reporting(E_ALL);
 require_once 'XML/Beautifier.php';
 
 /*
