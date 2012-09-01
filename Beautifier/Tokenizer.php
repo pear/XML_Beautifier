@@ -315,7 +315,7 @@ class XML_Beautifier_Tokenizer extends XML_Parser
              */
             $regs = array();
             preg_match("/<!--(.+)-->/i", $data, $regs);
-            $comment = trim($regs[1]);
+            $comment = isset($regs[1]) ? trim($regs[1]) : '';
             
             $struct = array(
                 "type"    => XML_BEAUTIFIER_COMMENT,
