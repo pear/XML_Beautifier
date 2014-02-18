@@ -17,7 +17,7 @@
         ]
     },
     "description": "More info available on: http://pear.php.net/package/XML_Beautifier",
-    "license": "BSD License",
+    "license": "BSD-2-Clause",
     "name": "pear/xml_beautifier",
     "support": {
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=XML_Beautifier",
@@ -25,7 +25,9 @@
     },
     "type": "library",
     "require": {
-        "pear/pear_exception": "*"
+        "pear/pear": "*",
+        "pear/xml_parser": "*",
+        "pear/xml_util": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
